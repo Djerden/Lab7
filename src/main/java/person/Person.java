@@ -2,7 +2,7 @@ package person;
 
 import java.time.ZonedDateTime;
 
-public interface Person {
+public interface Person extends Comparable<Person>{
     public int getId();
 
     public void setId(int id);

@@ -28,4 +28,10 @@ public class Coordinates {
         if (y == null) throw new InvalidPersonFieldException("Координата Y не может быть null");
         this.y = y;
     }
+
+    @Override
+    public String toString() {
+        return "x: " + x +
+                ", y: " + y;
+    }
 }

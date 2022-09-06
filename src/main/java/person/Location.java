@@ -39,4 +39,11 @@ public class Location {
         if (name == null || name.length() > 842) throw new InvalidPersonFieldException("Поле name не может быть null, а его длина больше 842");
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "x: " + x +
+                ", y: " + y +
+                ", name: " + name;
+    }
 }

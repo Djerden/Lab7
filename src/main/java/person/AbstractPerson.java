@@ -1,6 +1,7 @@
 package person;
 
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 
 public abstract class AbstractPerson implements Person{
 
@@ -84,5 +85,27 @@ public abstract class AbstractPerson implements Person{
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        // https://overcoder.net/q/27595/%D0%BA%D0%B0%D0%BA-%D1%81%D1%80%D0%B0%D0%B2%D0%BD%D0%B8%D0%B2%D0%B0%D1%82%D1%8C-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D1%8B-%D0%BF%D0%BE-%D0%BD%D0%B5%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%B8%D0%BC-%D0%BF%D0%BE%D0%BB%D1%8F%D0%BC
+        return Comparator.comparing(Person::getName).thenComparing(Person::getHeight)
+                .thenComparing(Person::getWeight).thenComparing(Person::getCreationDate).compare(this, o);
+    }
+
+    @Override
+    public String toString() {
+        return "---------------" + "\n" +
+                "name: " + name + "\n" +
+                "id: " + id + "\n" +
+                "coordinates: " + coordinates + "\n" +
+                "creationDate: " + creationDate + "\n" +
+                "height: " + height + "\n" +
+                "weight: " + weight + "\n" +
+                "passportID: " + passportID + "\n" +
+                "nationality: " + nationality + "\n" +
+                "location: " + location + "\n" +
+                "---------------" + "\n";
     }
 }

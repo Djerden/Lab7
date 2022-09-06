@@ -80,7 +80,7 @@ public class DefaultPerson extends AbstractPerson {
         if (passportID != null && (passportID.trim().length() < 8 || passportID.trim().length() > 47)) {
             throw new InvalidPersonFieldException("Длина строки passportID не должна быть меньше 8 и больше 47");
         }
-        super.setPassportID(passportID);
+        super.setPassportID(passportID.trim());
     }
 
     @Override
@@ -88,4 +88,6 @@ public class DefaultPerson extends AbstractPerson {
         if (nationality == null) throw new InvalidPersonFieldException("Поле nationality не может быть null");
         super.setNationality(nationality);
     }
+
+
 }
