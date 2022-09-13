@@ -1,5 +1,7 @@
 package person;
 
+import exceptions.InvalidPersonFieldException;
+
 import java.io.Serializable;
 import java.time.ZoneId;
 
@@ -25,5 +27,26 @@ public enum Country implements Serializable {
                 zoneId = "Australia/Sydney";
         }
         return zoneId;
+    }
+
+    public static String[] returnCountries() {
+        String[] countries = {"china", "south_korea", "north_korea"};
+        return countries;
+    }
+
+    public static Country switchCountry(String country) {
+        Country p = null;
+        switch (country) {
+            case "china":
+                p = CHINA;
+            break;
+            case "south_korea":
+                p = SOUTH_KOREA;
+            break;
+            case "north_korea":
+                p = NORTH_KOREA;
+            break;
+        }
+        return p;
     }
 }

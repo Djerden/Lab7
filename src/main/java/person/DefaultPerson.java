@@ -20,6 +20,9 @@ public class DefaultPerson extends AbstractPerson {
 
     private static int nextId = 1;
 
+    public DefaultPerson() {
+        setAutomaticallyId();
+    }
     public DefaultPerson(String name, Coordinates coordinates, Double height, Long weight,
                          String passportId, Country nationality, Location location) {
 

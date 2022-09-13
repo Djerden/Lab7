@@ -1,10 +1,7 @@
 package client;
 
 import collection.PersonCollection;
-import commands.Command;
-import commands.ExitCommand;
-import commands.HelpCommand;
-import commands.ShowCommand;
+import commands.*;
 import io.Writer;
 import person.Person;
 
@@ -31,7 +28,16 @@ public class CommandSimpleFactory implements CommandFactory{
 
         commands.put("exit", new ExitCommand(application));
         commands.put("help", new HelpCommand(writer));
-        commands.put("show", new ShowCommand((PersonCollection) personCollection, writer));
+        commands.put("show", new ShowCommand(personCollection, writer));
+        commands.put("insert", new InsertCommand(personCollection));
+        commands.put("update", new UpdateByIdCommand(personCollection));
+        commands.put("remove_key", new RemoveByKeyCommand(personCollection));
+        commands.put("clear", new ClearCommand(personCollection));
+        commands.put("save", new SaveCollectionCommand(personCollection));
+        commands.put("remove_greater", new RemoveGreaterCommand(personCollection));
+        commands.put("remove_greater_key", new RemoveGreaterByKeyCommand(personCollection));
+        commands.put("max_by_weight", new MaxByWeightCommand(personCollection, writer));
+        commands.put("filter_less_than_passport_id", new FilterLessThanPassportIdCommand(personCollection, writer));
     }
 
     @Override

@@ -8,6 +8,10 @@ public class Coordinates implements Serializable {
     private Integer x; //Значение поля должно быть больше -199, Поле не может быть null
     private Integer y; //Поле не может быть null
 
+    public Coordinates() {
+
+    }
+
     public Coordinates(Integer x, Integer y) {
         setX(x);
         setY(y);

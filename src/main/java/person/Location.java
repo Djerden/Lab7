@@ -9,6 +9,10 @@ public class Location implements Serializable {
     private double y;
     private String name; //Длина строки не должна быть больше 842, Поле не может быть null
 
+
+    public Location() {
+
+    }
     public Location(Double x, double y, String name) {
 
         setX(x);
