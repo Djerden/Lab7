@@ -1,10 +1,13 @@
 import collection.HashMapPersonCollection;
+import collection.JsonPersonReader;
+import collection.JsonPersonWriter;
 import collection.PersonCollection;
 import person.*;
 
 public class CollectionTest {
     public static void main(String[] args) throws InterruptedException {
-        PersonCollection collection = new HashMapPersonCollection();
+        String fileName = "C:\\Users\\Number_One\\Downloads\\Json.txt";
+        PersonCollection collection = new HashMapPersonCollection(new JsonPersonReader(fileName), new JsonPersonWriter(fileName));
 
         Person person5 = new DefaultPerson("Alexandr", new Coordinates(12, 12), 186.0, 70L,
                 "4017677987", Country.CHINA, new Location(56.0, 78, "HO SHI MIN"));
@@ -30,8 +33,13 @@ public class CollectionTest {
         collection.insert("5", person4);
         System.out.println(collection.info());
 
+        collection.save();
 
-        // System.out.println(collection.max_by_weight().toString());
+        collection.clear();
+
+        collection.loadData();
+
+        System.out.println(collection.show().toString());
 
 
 

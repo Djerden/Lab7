@@ -17,6 +17,7 @@ public interface PersonCollection {
     void remove_key(String key); // удалить элемент из коллекции по его ключу
     void clear(); // очистить коллекцию
     void save(); // сохранить коллекцию в файл
+    void loadData(); // загрузить данные из файла
     void remove_greater(Person person); // удалить из коллекции все элементы, превышающие заданный
     void remove_greater_key(String key); // удалить из коллекции все элементы, ключ которых превышает заданный
     void remove_any_by_nationality(Country country); // удалить из коллекции один элемент, значение поля nationality которого эквивалентно заданному

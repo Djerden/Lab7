@@ -1,9 +1,10 @@
 package person;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 
-public abstract class AbstractPerson implements Person{
+public abstract class AbstractPerson implements Person, Serializable {
 
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой

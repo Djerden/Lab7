@@ -13,11 +13,15 @@ public class HashMapPersonCollection implements PersonCollection {
 
     private Map<String, Person> personCollection; // В качестве ключа я буду указывать номер телефона
     private ZonedDateTime creationDate;
+    private PersonReader personReader;
+    private PersonWriter personWriter;
 
 
-    public HashMapPersonCollection() {
+    public HashMapPersonCollection(PersonReader personReader, PersonWriter personWriter) {
         personCollection = new HashMap<>();
         creationDate = ZonedDateTime.now();
+        this.personReader = personReader;
+        this.personWriter = personWriter;
     }
 
     @Override
@@ -69,8 +73,14 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public void save() {
-
+        personWriter.writePersons(personCollection);
     }
+
+    @Override
+    public void loadData() {
+        personCollection = (HashMap<String, Person>) personReader.readPersons();
+    }
+
     // ЧТо то с ним не так, нужно разобраться с ним
     @Override
     public void remove_greater(Person person) {

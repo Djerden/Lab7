@@ -2,7 +2,9 @@ package person;
 
 import exceptions.InvalidPersonFieldException;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
     private Integer x; //Значение поля должно быть больше -199, Поле не может быть null
     private Integer y; //Поле не может быть null
 

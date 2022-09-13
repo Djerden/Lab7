@@ -2,7 +2,9 @@ package person;
 
 import exceptions.InvalidPersonFieldException;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     private Double x; //Поле не может быть null
     private double y;
     private String name; //Длина строки не должна быть больше 842, Поле не может быть null

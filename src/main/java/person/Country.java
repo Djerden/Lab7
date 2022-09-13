@@ -1,8 +1,9 @@
 package person;
 
+import java.io.Serializable;
 import java.time.ZoneId;
 
-public enum Country {
+public enum Country implements Serializable {
     CHINA,
     SOUTH_KOREA,
     NORTH_KOREA;
