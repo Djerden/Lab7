@@ -20,8 +20,12 @@ public class ShowCommand implements Command {
     @Override
     public void execute() {
         List<Person> tempList = personCollection.show();
-        for (Person i : tempList) {
-            writer.write(i.toString());
+        if (tempList.isEmpty()) {
+            writer.write("Коллекция пуста");
+        } else {
+            for (Person i : tempList) {
+                writer.write(i.toString());
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import client.CommandSimpleFactory;
 import commands.Command;
 import commands.ObjectArgCommand;
 import commands.SimpleArgCommand;
+import exceptions.AbsenceArgumentException;
 import exceptions.InvalidPersonFieldException;
 import exceptions.NoInputException;
 import exceptions.UnknownCommandException;
@@ -15,6 +16,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ConsoleCommandReader implements CommandReader {
     private Writer writer;
@@ -32,22 +36,28 @@ public class ConsoleCommandReader implements CommandReader {
         String input = bufferedReader.readLine();
         if (input == null) {
             writer.write("Введите что-то более осмысленное");
-            throw new NoInputException("Отсутствие ввода");
+            throw new NullPointerException();
         }
 
-        String[] commandParameters = input.trim().toLowerCase().split("\\s+");
-        Command command = factory.chooseCommand(commandParameters[0]);
+        List<String> commandParameters = new ArrayList<>();
+        commandParameters.addAll(Arrays.asList(input.trim().toLowerCase().split("\\s+")));
+        if (commandParameters.size() < 2) {
+            commandParameters.add(null);
+        }
+
+        Command command = factory.chooseCommand(commandParameters.get(0));
         if (command == null) {
             throw new UnknownCommandException();
         }
+
         if (command instanceof SimpleArgCommand) {
-            if (commandParameters[1] != null) {
-                ((ObjectArgCommand)command).setSimpleArg(commandParameters[1]);
-            }
+            ((SimpleArgCommand) command).setSimpleArg(commandParameters.get(1));
         }
+
         if (command instanceof ObjectArgCommand) {
             ((ObjectArgCommand)command).setNeededObjects(this);
         }
+
 
         return command;
     }
@@ -119,7 +129,7 @@ public class ConsoleCommandReader implements CommandReader {
             Integer y = Integer.valueOf(bufferedReader.readLine().trim());
             coordinates.setY(y);
             person.setCoordinates(coordinates);
-        } catch(InvalidPersonFieldException | IOException e) {
+        } catch(InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
             writer.write("Некорректный ввод, попробуйте еще раз: ");
             readCoordinates(person);
@@ -143,7 +153,7 @@ public class ConsoleCommandReader implements CommandReader {
             writer.write("Введите Вес человека");
             Long weight = Long.valueOf(bufferedReader.readLine().trim());
             person.setWeight(weight);
-        } catch (InvalidPersonFieldException | IOException e) {
+        } catch (InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
             writer.write("Некорректный ввод, попробуйте еще раз: ");
             readWeight(person);

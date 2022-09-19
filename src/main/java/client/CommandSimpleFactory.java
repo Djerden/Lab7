@@ -28,12 +28,14 @@ public class CommandSimpleFactory implements CommandFactory{
 
         commands.put("exit", new ExitCommand(application));
         commands.put("help", new HelpCommand(writer));
+        commands.put("history", new HistoryCommand(application, writer));
+        commands.put("info", new InfoCommand(personCollection, writer));
         commands.put("show", new ShowCommand(personCollection, writer));
-        commands.put("insert", new InsertCommand(personCollection));
-        commands.put("update", new UpdateByIdCommand(personCollection));
-        commands.put("remove_key", new RemoveByKeyCommand(personCollection));
-        commands.put("clear", new ClearCommand(personCollection));
-        commands.put("save", new SaveCollectionCommand(personCollection));
+        commands.put("insert", new InsertCommand(personCollection, writer));
+        commands.put("update", new UpdateByIdCommand(personCollection, writer));
+        commands.put("remove_key", new RemoveByKeyCommand(personCollection, writer));
+        commands.put("clear", new ClearCommand(personCollection, writer));
+        commands.put("save", new SaveCollectionCommand(personCollection, writer));
         commands.put("remove_greater", new RemoveGreaterCommand(personCollection));
         commands.put("remove_greater_key", new RemoveGreaterByKeyCommand(personCollection));
         commands.put("max_by_weight", new MaxByWeightCommand(personCollection, writer));

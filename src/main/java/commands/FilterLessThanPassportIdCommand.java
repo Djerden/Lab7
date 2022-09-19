@@ -1,6 +1,7 @@
 package commands;
 
 import collection.PersonCollection;
+import exceptions.AbsenceArgumentException;
 import io.Writer;
 import person.Person;
 
@@ -20,13 +21,22 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
     @Override
     public void execute() {
         List<Person> tempList = personCollection.filter_less_than_passport_id(passportId);
-        for (Person i : tempList) {
-            writer.write(i.toString());
+        if (tempList.isEmpty()) {
+            writer.write("Таких элементов нет");
+        } else {
+            for (Person i : tempList) {
+                writer.write(i.toString());
+            }
         }
     }
 
     @Override
     public void setSimpleArg(String str) {
-        passportId = str;
+        if (str != null) {
+            passportId = str;
+        } else {
+            throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - паспорт");
+        }
+
     }
 }

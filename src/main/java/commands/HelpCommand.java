@@ -18,7 +18,7 @@ public class HelpCommand implements Command{
             "    remove_greater_key {number} : удалить из коллекции все элементы, ключ которых превышает заданный\n" +
             "    remove_any_by_nationality : удалить из коллекции один элемент, значение поля nationality которого эквивалентно заданному\n" +
             "    max_by_weight : вывести любой объект из коллекции, значение поля weight которого является максимальным\n" +
-            "    filter_less_than_passport_i_d passportID {passportId}: вывести элементы, значение поля passportID которых меньше заданного";
+            "    filter_less_than_passport_id {passportId}: вывести элементы, значение поля passportID которых меньше заданного";
 
     private Writer writer;
 

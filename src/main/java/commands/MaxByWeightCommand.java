@@ -15,6 +15,10 @@ public class MaxByWeightCommand implements Command{
 
     @Override
     public void execute() {
+        try {
         writer.write(personCollection.max_by_weight().toString());
+        } catch (NullPointerException e) {
+            writer.write("Коллекция пуста");
+        }
     }
 }

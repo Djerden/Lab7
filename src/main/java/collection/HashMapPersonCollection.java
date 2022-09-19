@@ -135,6 +135,7 @@ public class HashMapPersonCollection implements PersonCollection {
         }
         return personCollection.get(maxKey);
         // тоже неясно что вернет метод, если объектов не будет
+        // вернет null и метод toString вызовет ошибку NullPointerException
     }
 
     @Override

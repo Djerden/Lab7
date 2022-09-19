@@ -2,17 +2,21 @@ package commands;
 
 import collection.PersonCollection;
 import commands.Command;
+import io.Writer;
 
 public class ClearCommand implements Command {
 
     private PersonCollection personCollection;
 
-    public ClearCommand(PersonCollection personCollection) {
+    private Writer writer;
+    public ClearCommand(PersonCollection personCollection, Writer writer) {
         this.personCollection = personCollection;
+        this.writer = writer;
     }
 
     @Override
     public void execute() {
         personCollection.clear();
+        writer.write("Коллекция очищена");
     }
 }
