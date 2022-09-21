@@ -20,7 +20,7 @@ public interface PersonCollection {
     void loadData(); // загрузить данные из файла
     void remove_greater(Person person); // удалить из коллекции все элементы, превышающие заданный
     void remove_greater_key(String key); // удалить из коллекции все элементы, ключ которых превышает заданный
-    void remove_any_by_nationality(Country country); // удалить из коллекции один элемент, значение поля nationality которого эквивалентно заданному
+    Person remove_any_by_nationality(Country country); // удалить из коллекции один элемент, значение поля nationality которого эквивалентно заданному
     Person max_by_weight(); // вывести любой объект из коллекции, значение поля weight которого является максимальным
     List<Person> filter_less_than_passport_id(String passportId); // вывести элементы, значение поля passportID которых меньше заданного
 

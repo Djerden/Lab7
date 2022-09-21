@@ -37,9 +37,11 @@ public class CommandSimpleFactory implements CommandFactory{
         commands.put("clear", new ClearCommand(personCollection, writer));
         commands.put("save", new SaveCollectionCommand(personCollection, writer));
         commands.put("remove_greater", new RemoveGreaterCommand(personCollection));
-        commands.put("remove_greater_key", new RemoveGreaterByKeyCommand(personCollection));
+        commands.put("remove_greater_key", new RemoveGreaterByKeyCommand(personCollection, writer));
         commands.put("max_by_weight", new MaxByWeightCommand(personCollection, writer));
         commands.put("filter_less_than_passport_id", new FilterLessThanPassportIdCommand(personCollection, writer));
+        commands.put("load", new LoadCommand(personCollection, writer));
+        commands.put("remove_any_by_nationality", new RemoveAnyByNationalityCommand(personCollection, writer));
     }
 
     @Override

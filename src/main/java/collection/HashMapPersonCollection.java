@@ -1,6 +1,7 @@
 package collection;
 
 import person.Country;
+import person.DefaultPerson;
 import person.Person;
 
 import java.time.ZonedDateTime;
@@ -45,25 +46,22 @@ public class HashMapPersonCollection implements PersonCollection {
     }
 
 
-    // Как обработать ситуацию, если будет указан несуществующий id - выбросить исключение
+    // Как обработать ситуацию, если будет указан несуществующий id - выбросить исключение или добавить новый элемент с этим id
     // Также нужно сделать метод освобождения id и присвоения его новому владельцу
     @Override
     public void update(int id, Person newPerson) {
-        String key = "invalid id";
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
             if (entry.getValue().getId() == id) {
-                key = entry.getKey();
+                newPerson.setId(id);
+                personCollection.put(entry.getKey(), newPerson);
                 break;
             }
         }
-        personCollection.put(key, newPerson);
     }
 
     @Override
     public void remove_key(String key) {
-        personCollection.remove(key);
-        // если удаляется, то нужно освободить id и дать возможность использовать его другими
-        // сделать это
+        DefaultPerson.removeId((DefaultPerson) personCollection.remove(key));
     }
 
     @Override
@@ -78,49 +76,47 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public void loadData() {
-        personCollection = (HashMap<String, Person>) personReader.readPersons();
+        personCollection = personReader.readPersons();
     }
 
-    // ЧТо то с ним не так, нужно разобраться с ним
+
     @Override
     public void remove_greater(Person person) {
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
-            if (person.compareTo(entry.getValue()) < 0) {
-                System.out.println(entry.getKey() + " " + entry.getValue().getName());
-                personCollection.remove(entry.getKey());
+            if (person.compareTo(entry.getValue()) > 0) {
+                System.out.println(entry.getKey() + " " + entry.getValue().getName() + " - удален");
+                DefaultPerson.removeId((DefaultPerson)personCollection.remove(entry.getKey()));
             }
         }
     }
     // обработка map с помощью стримов: https://java-blog.ru/collections/map-v-java-s-primerami
 
-    // что-то с ним не так, разобраться в ошибке
-    //
-    //
-    ///
-    ///
-    //
-    //
-    //
-    //
-    //
-    //
     @Override
     public void remove_greater_key(String key) {
-        for (String mapKey : personCollection.keySet()) {
-            if (Integer.valueOf(mapKey) > Integer.valueOf(key)) {
-                personCollection.remove(mapKey);
+        try {
+            for (String mapKey : personCollection.keySet()) {
+                if (Integer.valueOf(mapKey) > Integer.valueOf(key)) {
+                    DefaultPerson.removeId((DefaultPerson) personCollection.remove(mapKey));
+                }
             }
+        } catch (Exception e) {
+
         }
     }
 
     @Override
-    public void remove_any_by_nationality(Country country) {
-        for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
-            if (entry.getValue().getNationality().equals(country)) {
-                personCollection.remove(entry.getKey());
-                break;
+    public Person remove_any_by_nationality(Country country) {
+        if (!personCollection.isEmpty()) {
+            for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
+                if (entry.getValue().getNationality().equals(country)) {
+                    Person person = personCollection.remove(entry.getKey());
+                    DefaultPerson.removeId((DefaultPerson) person);
+                    return person;
+                }
             }
+
         }
+        return null;
     }
 
     @Override
@@ -134,8 +130,6 @@ public class HashMapPersonCollection implements PersonCollection {
             }
         }
         return personCollection.get(maxKey);
-        // тоже неясно что вернет метод, если объектов не будет
-        // вернет null и метод toString вызовет ошибку NullPointerException
     }
 
     @Override

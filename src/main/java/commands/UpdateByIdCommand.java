@@ -20,7 +20,7 @@ public class UpdateByIdCommand implements ObjectArgCommand {
     @Override
     public void execute() {
         personCollection.update(id, person);
-        writer.write("Человек с " + id + " успешно заменен");
+        writer.write("Человек с id=" + id + " успешно заменен");
 
     }
 

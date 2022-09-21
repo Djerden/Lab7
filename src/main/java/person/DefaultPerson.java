@@ -4,6 +4,8 @@ import exceptions.InvalidPersonFieldException;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -19,6 +21,8 @@ public class DefaultPerson extends AbstractPerson {
     // Поле location может быть null
 
     private static int nextId = 1;
+
+    public static List<Integer> removedIds = new ArrayList<>();
 
     public DefaultPerson() {
         setAutomaticallyId();
@@ -43,8 +47,16 @@ public class DefaultPerson extends AbstractPerson {
     }
 
     private void setAutomaticallyId() {
-        super.setId(nextId);
-        nextId++;
+        if (removedIds.isEmpty()) {
+            super.setId(nextId);
+            nextId++;
+        } else {
+            super.setId(removedIds.remove(0));
+        }
+    }
+
+    public static void removeId(Person person) {
+        removedIds.add(person.getId());
     }
 
     @Override

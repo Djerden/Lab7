@@ -206,7 +206,7 @@ public class ConsoleCommandReader implements CommandReader {
             String name = bufferedReader.readLine().trim();
             location.setName(name);
             person.setLocation(location);
-        } catch(InvalidPersonFieldException | IOException e) {
+        } catch(InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
             writer.write("Некорректный ввод, попробуйте еще раз: ");
             readLocation(person);

@@ -37,7 +37,11 @@ public class CollectionTest {
 
         collection.clear();
 
-        collection.loadData();
+        try {
+            collection.loadData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         System.out.println(collection.show().toString());
 
