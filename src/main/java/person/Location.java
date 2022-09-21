@@ -4,6 +4,9 @@ import exceptions.InvalidPersonFieldException;
 
 import java.io.Serializable;
 
+/**
+ *  Сlass that defines the location of a locality
+ */
 public class Location implements Serializable {
     private Double x; //Поле не может быть null
     private double y;

@@ -4,6 +4,9 @@ import collection.PersonCollection;
 import io.CommandReader;
 import person.Person;
 
+/**
+ * A command that allows you to delete objects whose values have more parameters than the specified object
+ */
 public class RemoveGreaterCommand implements ObjectArgCommand {
 
     private PersonCollection personCollection;

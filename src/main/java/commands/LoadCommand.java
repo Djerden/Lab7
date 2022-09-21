@@ -3,6 +3,9 @@ package commands;
 import collection.PersonCollection;
 import io.Writer;
 
+/**
+ * A command that allows you to upload saved data to a collection
+ */
 public class LoadCommand implements Command{
 
     private PersonCollection personCollection;

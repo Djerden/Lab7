@@ -3,6 +3,9 @@ package commands;
 import collection.PersonCollection;
 import io.Writer;
 
+/**
+ * A command that allows you to delete objects whose keys are larger than the specified one
+ */
 public class RemoveGreaterByKeyCommand implements SimpleArgCommand{
 
     private PersonCollection personCollection;

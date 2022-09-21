@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Specific implementation of the PersonCollection interface with data stored in hashmap
+ */
 public class HashMapPersonCollection implements PersonCollection {
 
     private Map<String, Person> personCollection; // В качестве ключа я буду указывать номер телефона

@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+/**
+ * Client implementation of the Application interface
+ */
 public class Client implements Application {
     private String fileName;
     private boolean isRunning;

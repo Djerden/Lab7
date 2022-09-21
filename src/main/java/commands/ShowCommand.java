@@ -7,6 +7,9 @@ import person.Person;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A command that outputs all objects in the collection
+ */
 public class ShowCommand implements Command {
 
     private PersonCollection personCollection;

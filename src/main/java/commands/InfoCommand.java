@@ -3,6 +3,9 @@ package commands;
 import collection.PersonCollection;
 import io.Writer;
 
+/**
+ * Command that outputs information about the collection
+ */
 public class InfoCommand implements Command {
 
     private PersonCollection personCollection;

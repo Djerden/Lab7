@@ -6,7 +6,7 @@ import person.Person;
 import java.util.List;
 
 /**
- *
+ * Interface that provides the necessary functionality
  */
 public interface PersonCollection {
 

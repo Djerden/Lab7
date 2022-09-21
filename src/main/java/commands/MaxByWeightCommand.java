@@ -3,6 +3,9 @@ package commands;
 import collection.PersonCollection;
 import io.Writer;
 
+/**
+ * The command that outputs the object with the maximum weight
+ */
 public class MaxByWeightCommand implements Command{
 
     private PersonCollection personCollection;

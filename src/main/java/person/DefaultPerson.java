@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+/**
+ * Concrete implementation of objects of type Person
+ */
 public class DefaultPerson extends AbstractPerson {
     // Значение поля id должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     // Поле name не может быть null, Строка не может быть пустой

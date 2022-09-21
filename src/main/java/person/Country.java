@@ -5,6 +5,11 @@ import exceptions.InvalidPersonFieldException;
 import java.io.Serializable;
 import java.time.ZoneId;
 
+/**
+ * Class that defines the country of residence for objects of the Person type
+ * Also, its functionality allows you to return the available countries in the form of a text list,
+ * select the time zone
+ */
 public enum Country implements Serializable {
     CHINA,
     SOUTH_KOREA,

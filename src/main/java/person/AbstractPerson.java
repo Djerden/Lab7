@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 
+/**
+ * Abstract implementation of the Person interface containing the necessary fields
+ */
 public abstract class AbstractPerson implements Person, Serializable {
 
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически

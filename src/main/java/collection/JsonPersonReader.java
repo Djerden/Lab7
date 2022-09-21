@@ -12,6 +12,9 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Specific implementation of the PersonReader interface for Json format
+ */
 public class JsonPersonReader implements PersonReader{
 
     private String fileName;

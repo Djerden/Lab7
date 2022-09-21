@@ -2,6 +2,9 @@ package commands;
 
 import client.Application;
 
+/**
+ * Exit command from the program
+ */
 public class ExitCommand implements Command {
     private Application application;
 

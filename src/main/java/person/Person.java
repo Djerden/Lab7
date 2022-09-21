@@ -2,6 +2,9 @@ package person;
 
 import java.time.ZonedDateTime;
 
+/**
+ * Interface that provides basic functionality for objects of the Person type
+ */
 public interface Person extends Comparable<Person>{
     public int getId();
 

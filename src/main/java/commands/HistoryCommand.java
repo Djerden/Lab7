@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Queue;
 
+/**
+ *  Command that outputs the last 9 commands used
+ */
 public class HistoryCommand implements Command{
 
     private Application application;

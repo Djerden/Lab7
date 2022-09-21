@@ -4,6 +4,9 @@ import collection.PersonCollection;
 import exceptions.AbsenceArgumentException;
 import io.Writer;
 
+/**
+ * A command that allows you to delete an object from the collection by key
+ */
 public class RemoveByKeyCommand implements SimpleArgCommand {
 
     private PersonCollection personCollection;

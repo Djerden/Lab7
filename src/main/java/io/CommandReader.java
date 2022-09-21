@@ -6,6 +6,9 @@ import person.Person;
 
 import java.io.IOException;
 
+/**
+ * Data reading interface
+ */
 public interface CommandReader {
     Command readCommands() throws IOException;
     Person readPerson();

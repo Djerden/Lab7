@@ -13,6 +13,9 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
     private Writer writer;
     private String passportId;
 
+    /**
+     * Command that outputs objects of the Person passport Id type that are less than the specified one
+     */
     public FilterLessThanPassportIdCommand(PersonCollection personCollection, Writer writer) {
         this.personCollection = personCollection;
         this.writer = writer;

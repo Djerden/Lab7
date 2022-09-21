@@ -8,6 +8,9 @@ import person.Person;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Factory that creates the commands necessary for the operation of this application
+ */
 public class CommandSimpleFactory implements CommandFactory{
     private Map<String, Command> commands;
 

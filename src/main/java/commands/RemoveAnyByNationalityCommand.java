@@ -6,6 +6,9 @@ import io.Writer;
 import person.Country;
 import person.Person;
 
+/**
+ * A command that allows you to delete an object from a collection with a given country
+ */
 public class RemoveAnyByNationalityCommand implements ObjectArgCommand {
 
     private PersonCollection personCollection;

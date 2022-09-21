@@ -4,6 +4,9 @@ import collection.PersonCollection;
 import commands.Command;
 import io.Writer;
 
+/**
+ * Command to clear the collection
+ */
 public class ClearCommand implements Command {
 
     private PersonCollection personCollection;

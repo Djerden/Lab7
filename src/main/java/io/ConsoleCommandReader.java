@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Console implementation of the CommandReader interface
+ */
 public class ConsoleCommandReader implements CommandReader {
     private Writer writer;
     private CommandFactory factory;
@@ -141,7 +144,7 @@ public class ConsoleCommandReader implements CommandReader {
             writer.write("Введите рост человека");
             Double height = Double.valueOf(bufferedReader.readLine().trim());
             person.setHeight(height);
-        } catch (InvalidPersonFieldException | IOException e) {
+        } catch (InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
             writer.write("Некорректный ввод, попробуйте еще раз: ");
             readHeight(person);

@@ -14,6 +14,9 @@ public class InsertCommand implements ObjectArgCommand {
     private String number;
     private Person person;
 
+    /**
+     * Command to add objects of the Person type to the collection
+     */
     public InsertCommand(PersonCollection personCollection, Writer writer) {
         this.personCollection = personCollection;
         this.writer = writer;

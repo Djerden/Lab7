@@ -4,6 +4,9 @@ import exceptions.InvalidPersonFieldException;
 
 import java.io.Serializable;
 
+/**
+ * Class that defines the location of the location of an object of type Person
+ */
 public class Coordinates implements Serializable {
     private Integer x; //Значение поля должно быть больше -199, Поле не может быть null
     private Integer y; //Поле не может быть null

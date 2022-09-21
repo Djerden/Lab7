@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Specific implementation of the PersonWriter interface for Json format
+ */
 public class JsonPersonWriter implements PersonWriter {
 
     private String fileName;

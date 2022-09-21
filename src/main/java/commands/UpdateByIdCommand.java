@@ -6,6 +6,9 @@ import io.CommandReader;
 import io.Writer;
 import person.Person;
 
+/**
+ * A command that replaces another object by id
+ */
 public class UpdateByIdCommand implements ObjectArgCommand {
     private PersonCollection personCollection;
     private Writer writer;
