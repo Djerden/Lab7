@@ -21,4 +21,8 @@ public class SaveCollectionCommand implements Command{
         personCollection.save();
         writer.write("Коллекция сохранена");
     }
+    @Override
+    public String toString() {
+        return "save";
+    }
 }

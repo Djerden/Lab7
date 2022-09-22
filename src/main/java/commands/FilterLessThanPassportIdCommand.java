@@ -42,4 +42,9 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "filter_less_than_passport_id";
+    }
 }

@@ -20,4 +20,9 @@ public class InfoCommand implements Command {
     public void execute() {
         writer.write(personCollection.info());
     }
+
+    @Override
+    public String toString() {
+        return "info";
+    }
 }

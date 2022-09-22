@@ -41,4 +41,9 @@ public class InsertCommand implements ObjectArgCommand {
             throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - номер");
         }
     }
+
+    @Override
+    public String toString() {
+        return "insert";
+    }
 }

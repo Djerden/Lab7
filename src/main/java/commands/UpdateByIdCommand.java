@@ -40,4 +40,9 @@ public class UpdateByIdCommand implements ObjectArgCommand {
             throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - id");
         }
     }
+
+    @Override
+    public String toString() {
+        return "update";
+    }
 }

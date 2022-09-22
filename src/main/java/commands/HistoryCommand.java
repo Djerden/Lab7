@@ -19,13 +19,18 @@ public class HistoryCommand implements Command{
     public HistoryCommand(Application application, Writer writer) {
         this.application = application;
         this.writer = writer;
-        commands = application.getHistory();
     }
     @Override
     public void execute() {
+        commands = application.getHistory();
         ListIterator<Command> listIterator = ((LinkedList<Command>)commands).listIterator(commands.size());
         while (listIterator.hasPrevious()) {
             writer.write(listIterator.previous().toString());
         }
+
+    }
+    @Override
+    public String toString() {
+        return "history";
     }
 }

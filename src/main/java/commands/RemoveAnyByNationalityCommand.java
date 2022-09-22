@@ -39,4 +39,9 @@ public class RemoveAnyByNationalityCommand implements ObjectArgCommand {
     public void setNeededObjects(CommandReader reader) {
         country = reader.readCountry();
     }
+
+    @Override
+    public String toString() {
+        return "remove_any_by_nationality";
+    }
 }

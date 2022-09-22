@@ -21,4 +21,9 @@ public class LoadCommand implements Command{
         personCollection.loadData();
         writer.write("Данные успешно загружены");
     }
+
+    @Override
+    public String toString() {
+        return "load";
+    }
 }

@@ -27,4 +27,9 @@ public class RemoveGreaterByKeyCommand implements SimpleArgCommand{
     public void setSimpleArg(String str) {
         number = str;
     }
+
+    @Override
+    public String toString() {
+        return "remove_greater_key";
+    }
 }

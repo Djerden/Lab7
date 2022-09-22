@@ -34,4 +34,9 @@ public class HelpCommand implements Command{
     public void execute() {
         writer.write(helpInformation);
     }
+
+    @Override
+    public String toString() {
+        return "help";
+    }
 }

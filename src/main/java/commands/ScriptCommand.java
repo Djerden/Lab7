@@ -60,4 +60,9 @@ public class ScriptCommand implements SimpleArgCommand {
         fileName = str;
     }
 
+    @Override
+    public String toString() {
+        return "execute_script";
+    }
+
 }

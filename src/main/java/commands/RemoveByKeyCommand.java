@@ -32,4 +32,8 @@ public class RemoveByKeyCommand implements SimpleArgCommand {
             throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - паспорт");
         }
     }
+    @Override
+    public String toString() {
+        return "remove_key";
+    }
 }

@@ -24,4 +24,9 @@ public class MaxByWeightCommand implements Command{
             writer.write("Коллекция пуста");
         }
     }
+
+    @Override
+    public String toString() {
+        return "max_by_weight";
+    }
 }

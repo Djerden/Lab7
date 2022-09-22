@@ -30,4 +30,8 @@ public class RemoveGreaterCommand implements ObjectArgCommand {
     public void setSimpleArg(String str) {
 
     }
+    @Override
+    public String toString() {
+        return "remove_greater";
+    }
 }

@@ -22,4 +22,9 @@ public class ClearCommand implements Command {
         personCollection.clear();
         writer.write("Коллекция очищена");
     }
+
+    @Override
+    public String toString() {
+        return "clear";
+    }
 }

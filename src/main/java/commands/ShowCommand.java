@@ -31,4 +31,9 @@ public class ShowCommand implements Command {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "show";
+    }
 }
