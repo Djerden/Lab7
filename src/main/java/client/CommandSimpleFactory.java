@@ -45,6 +45,7 @@ public class CommandSimpleFactory implements CommandFactory{
         commands.put("filter_less_than_passport_id", new FilterLessThanPassportIdCommand(personCollection, writer));
         commands.put("load", new LoadCommand(personCollection, writer));
         commands.put("remove_any_by_nationality", new RemoveAnyByNationalityCommand(personCollection, writer));
+        commands.put("execute_script", new ScriptCommand(this, writer));
     }
 
     @Override

@@ -80,12 +80,6 @@ public class ConsoleCommandReader implements CommandReader {
         return person;
     }
 
-
-
-
-    //
-    // Протестировать этот метод и по возможности объединить его с readNationality()
-    //
     @Override
     public Country readCountry() {
         Country country = null;
