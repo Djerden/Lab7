@@ -24,7 +24,6 @@ public class JsonPersonReader implements PersonReader{
     }
 
 
-    // НЕ РАБОТАЕТ !!! Ошибка при возврате коллекции
     @Override
     public Map<String, Person> readPersons() {
         String jsonString = getJsonString();

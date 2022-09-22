@@ -49,8 +49,6 @@ public class HashMapPersonCollection implements PersonCollection {
     }
 
 
-    // Как обработать ситуацию, если будет указан несуществующий id - выбросить исключение или добавить новый элемент с этим id
-    // Также нужно сделать метод освобождения id и присвоения его новому владельцу
     @Override
     public void update(int id, Person newPerson) {
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
@@ -146,5 +144,5 @@ public class HashMapPersonCollection implements PersonCollection {
         return tempList;
     }
 
-    // Протестировать сравнение цифр в строках, работает ли вообще? нужно ли переводить в Int?
+
 }
