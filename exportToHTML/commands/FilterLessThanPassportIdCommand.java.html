@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>FilterLessThanPassportIdCommand.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FilterLessThanPassportIdCommand.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">commands</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../collection/PersonCollection.java.html">collection.PersonCollection</a>;</span>
+<span class="s0">import <a href="../exceptions/AbsenceArgumentException.java.html">exceptions.AbsenceArgumentException</a>;</span>
+<span class="s0">import <a href="../io/Writer.java.html">io.Writer</a>;</span>
+<span class="s0">import <a href="../person/Person.java.html">person.Person</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">FilterLessThanPassportIdCommand </span><span class="s0">implements <a href="SimpleArgCommand.java.html">SimpleArgCommand</a></span><span class="s1">{</span>
+
+    <span class="s0">private <a href="../collection/PersonCollection.java.html">PersonCollection</a> </span><span class="s1">personCollection</span><span class="s0">;</span>
+    <span class="s0">private <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String passportId</span><span class="s0">;</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Command that outputs objects of the Person passport Id type that are less than the specified one</span>
+     <span class="s2">*/</span>
+    <span class="s0">public </span><span class="s1">FilterLessThanPassportIdCommand(<a href="../collection/PersonCollection.java.html">PersonCollection</a> personCollection</span><span class="s0">, <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer) {</span>
+        <span class="s0">this</span><span class="s1">.personCollection = personCollection</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.writer = writer</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">execute() {</span>
+        <span class="s1">List&lt;Person&gt; tempList = personCollection.filter_less_than_passport_id(passportId)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(tempList.isEmpty()) {</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Таких элементов нет&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">for </span><span class="s1">(<a href="../person/Person.java.html">Person</a> i : tempList) {</span>
+                <span class="s1">writer.write(i.toString())</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setSimpleArg(String str) {</span>
+        <span class="s0">if </span><span class="s1">(str != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">passportId = str</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">throw new <a href="../exceptions/AbsenceArgumentException.java.html">AbsenceArgumentException</a></span><span class="s1">(</span><span class="s3">&quot;Для этой команды необходимо передать аргумент - паспорт&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s3">&quot;filter_less_than_passport_id&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

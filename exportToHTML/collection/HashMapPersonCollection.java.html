@@ -1,0 +1,170 @@
+<html>
+<head>
+<title>HashMapPersonCollection.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #808080;}
+.s4 { color: #6a8759;}
+.s5 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+HashMapPersonCollection.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">collection</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../person/Country.java.html">person.Country</a>;</span>
+<span class="s0">import <a href="../person/DefaultPerson.java.html">person.DefaultPerson</a>;</span>
+<span class="s0">import <a href="../person/Person.java.html">person.Person</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Map</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Specific implementation of the PersonCollection interface with data stored in hashmap</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">HashMapPersonCollection </span><span class="s0">implements <a href="PersonCollection.java.html">PersonCollection</a> </span><span class="s1">{</span>
+
+    <span class="s0">private </span><span class="s1">Map&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; personCollection</span><span class="s0">; </span><span class="s3">// В качестве ключа я буду указывать номер телефона</span>
+    <span class="s0">private </span><span class="s1">ZonedDateTime creationDate</span><span class="s0">;</span>
+    <span class="s0">private <a href="PersonReader.java.html">PersonReader</a> </span><span class="s1">personReader</span><span class="s0">;</span>
+    <span class="s0">private <a href="PersonWriter.java.html">PersonWriter</a> </span><span class="s1">personWriter</span><span class="s0">;</span>
+
+
+    <span class="s0">public </span><span class="s1">HashMapPersonCollection(<a href="PersonReader.java.html">PersonReader</a> personReader</span><span class="s0">, <a href="PersonWriter.java.html">PersonWriter</a> </span><span class="s1">personWriter) {</span>
+        <span class="s1">personCollection = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s1">creationDate = ZonedDateTime.now()</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.personReader = personReader</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.personWriter = personWriter</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String info() {</span>
+        <span class="s0">return </span><span class="s4">&quot;Сollection type: Map of persons&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Creation date: &quot; </span><span class="s1">+ creationDate +</span>
+                <span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Number of elements: &quot; </span><span class="s1">+ personCollection.size()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">List&lt;Person&gt; show() {</span>
+        <span class="s1">List&lt;Person&gt; tempList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s1">personCollection.values().stream().sorted().forEach(tempList::add)</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">tempList</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">insert(String key</span><span class="s0">, <a href="../person/Person.java.html">Person</a> </span><span class="s1">person) {</span>
+        <span class="s3">// Ключ - номер телефона</span>
+        <span class="s1">personCollection.put(key</span><span class="s0">, </span><span class="s1">person)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">update(</span><span class="s0">int </span><span class="s1">id</span><span class="s0">, <a href="../person/Person.java.html">Person</a> </span><span class="s1">newPerson) {</span>
+        <span class="s0">for </span><span class="s1">(Map.Entry&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; entry : personCollection.entrySet()) {</span>
+            <span class="s0">if </span><span class="s1">(entry.getValue().getId() == id) {</span>
+                <span class="s1">newPerson.setId(id)</span><span class="s0">;</span>
+                <span class="s1">personCollection.put(entry.getKey()</span><span class="s0">, </span><span class="s1">newPerson)</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">remove_key(String key) {</span>
+        <a href="../person/DefaultPerson.java.html">DefaultPerson</a><span class="s1">.removeId((<a href="../person/DefaultPerson.java.html">DefaultPerson</a>) personCollection.remove(key))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">clear() {</span>
+        <span class="s1">personCollection.clear()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">save() {</span>
+        <span class="s1">personWriter.writePersons(personCollection)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">loadData() {</span>
+            <span class="s1">personCollection = personReader.readPersons()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">remove_greater(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">for </span><span class="s1">(Map.Entry&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; entry : personCollection.entrySet()) {</span>
+            <span class="s0">if </span><span class="s1">(person.compareTo(entry.getValue()) &gt; </span><span class="s5">0</span><span class="s1">) {</span>
+                <span class="s1">System.out.println(entry.getKey() + </span><span class="s4">&quot; &quot; </span><span class="s1">+ entry.getValue().getName() + </span><span class="s4">&quot; - удален&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <a href="../person/DefaultPerson.java.html">DefaultPerson</a><span class="s1">.removeId((<a href="../person/DefaultPerson.java.html">DefaultPerson</a>)personCollection.remove(entry.getKey()))</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s3">// обработка map с помощью стримов: https://java-blog.ru/collections/map-v-java-s-primerami</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">remove_greater_key(String key) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s0">for </span><span class="s1">(String mapKey : personCollection.keySet()) {</span>
+                <span class="s0">if </span><span class="s1">(Integer.valueOf(mapKey) &gt; Integer.valueOf(key)) {</span>
+                    <a href="../person/DefaultPerson.java.html">DefaultPerson</a><span class="s1">.removeId((<a href="../person/DefaultPerson.java.html">DefaultPerson</a>) personCollection.remove(mapKey))</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(Exception e) {</span>
+
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public <a href="../person/Person.java.html">Person</a> </span><span class="s1">remove_any_by_nationality(<a href="../person/Country.java.html">Country</a> country) {</span>
+        <span class="s0">if </span><span class="s1">(!personCollection.isEmpty()) {</span>
+            <span class="s0">for </span><span class="s1">(Map.Entry&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; entry : personCollection.entrySet()) {</span>
+                <span class="s0">if </span><span class="s1">(entry.getValue().getNationality().equals(country)) {</span>
+                    <a href="../person/Person.java.html">Person</a> <span class="s1">person = personCollection.remove(entry.getKey())</span><span class="s0">;</span>
+                    <a href="../person/DefaultPerson.java.html">DefaultPerson</a><span class="s1">.removeId((<a href="../person/DefaultPerson.java.html">DefaultPerson</a>) person)</span><span class="s0">;</span>
+                    <span class="s0">return </span><span class="s1">person</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+
+        <span class="s1">}</span>
+        <span class="s0">return null;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public <a href="../person/Person.java.html">Person</a> </span><span class="s1">max_by_weight() {</span>
+        <span class="s1">String maxKey = </span><span class="s4">&quot;&quot;</span><span class="s0">;</span>
+        <span class="s1">Long maxWeight = </span><span class="s5">0L</span><span class="s0">;</span>
+        <span class="s0">for </span><span class="s1">(Map.Entry&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; entry : personCollection.entrySet()) {</span>
+            <span class="s0">if </span><span class="s1">(entry.getValue().getWeight() &gt; maxWeight) {</span>
+                <span class="s1">maxWeight = entry.getValue().getWeight()</span><span class="s0">;</span>
+                <span class="s1">maxKey = entry.getKey()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">personCollection.get(maxKey)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">List&lt;Person&gt; filter_less_than_passport_id(String passportId) {</span>
+        <span class="s1">List&lt;Person&gt; tempList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s0">for </span><span class="s1">(<a href="../person/Person.java.html">Person</a> p : personCollection.values()) {</span>
+            <span class="s0">if </span><span class="s1">(p.getPassportID().compareTo(passportId) &lt; </span><span class="s5">0</span><span class="s1">) {</span>
+                <span class="s1">tempList.add(p)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">tempList</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

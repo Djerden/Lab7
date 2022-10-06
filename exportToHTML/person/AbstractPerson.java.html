@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>AbstractPerson.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #808080;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AbstractPerson.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">person</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.Serializable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Comparator</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Abstract implementation of the Person interface containing the necessary fields</span>
+ <span class="s2">*/</span>
+<span class="s0">public abstract class </span><span class="s1">AbstractPerson </span><span class="s0">implements <a href="Person.java.html">Person</a>, </span><span class="s1">Serializable {</span>
+
+    <span class="s0">private int </span><span class="s1">id</span><span class="s0">; </span><span class="s3">//Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически</span>
+    <span class="s0">private </span><span class="s1">String name</span><span class="s0">; </span><span class="s3">//Поле не может быть null, Строка не может быть пустой</span>
+    <span class="s0">private <a href="Coordinates.java.html">Coordinates</a> </span><span class="s1">coordinates</span><span class="s0">; </span><span class="s3">//Поле не может быть null</span>
+    <span class="s0">private </span><span class="s1">java.time.ZonedDateTime creationDate</span><span class="s0">; </span><span class="s3">//Поле не может быть null, Значение этого поля должно генерироваться автоматически</span>
+    <span class="s0">private </span><span class="s1">Double height</span><span class="s0">; </span><span class="s3">//Поле может быть null, Значение поля должно быть больше 0</span>
+    <span class="s0">private </span><span class="s1">Long weight</span><span class="s0">; </span><span class="s3">//Поле может быть null, Значение поля должно быть больше 0</span>
+    <span class="s0">private </span><span class="s1">String passportID</span><span class="s0">; </span><span class="s3">//Длина строки не должна быть больше 47, Значение этого поля должно быть уникальным, Длина строки должна быть не меньше 8, Поле может быть null</span>
+    <span class="s0">private <a href="Country.java.html">Country</a> </span><span class="s1">nationality</span><span class="s0">; </span><span class="s3">//Поле не может быть null</span>
+    <span class="s0">private <a href="Location.java.html">Location</a> </span><span class="s1">location</span><span class="s0">; </span><span class="s3">//Поле может быть null</span>
+
+    <span class="s0">public int </span><span class="s1">getId() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setId(</span><span class="s0">int </span><span class="s1">id) {</span>
+        <span class="s0">this</span><span class="s1">.id = id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getName() {</span>
+        <span class="s0">return </span><span class="s1">name</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setName(String name) {</span>
+        <span class="s0">this</span><span class="s1">.name = name</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public <a href="Coordinates.java.html">Coordinates</a> </span><span class="s1">getCoordinates() {</span>
+        <span class="s0">return </span><span class="s1">coordinates</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCoordinates(<a href="Coordinates.java.html">Coordinates</a> coordinates) {</span>
+        <span class="s0">this</span><span class="s1">.coordinates = coordinates</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">ZonedDateTime getCreationDate() {</span>
+        <span class="s0">return </span><span class="s1">creationDate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCreationDate(ZonedDateTime creationDate) {</span>
+        <span class="s0">this</span><span class="s1">.creationDate = creationDate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Double getHeight() {</span>
+        <span class="s0">return </span><span class="s1">height</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setHeight(Double height) {</span>
+        <span class="s0">this</span><span class="s1">.height = height</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Long getWeight() {</span>
+        <span class="s0">return </span><span class="s1">weight</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setWeight(Long weight) {</span>
+        <span class="s0">this</span><span class="s1">.weight = weight</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPassportID() {</span>
+        <span class="s0">return </span><span class="s1">passportID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPassportID(String passportID) {</span>
+        <span class="s0">this</span><span class="s1">.passportID = passportID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public <a href="Country.java.html">Country</a> </span><span class="s1">getNationality() {</span>
+        <span class="s0">return </span><span class="s1">nationality</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNationality(<a href="Country.java.html">Country</a> nationality) {</span>
+        <span class="s0">this</span><span class="s1">.nationality = nationality</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public <a href="Location.java.html">Location</a> </span><span class="s1">getLocation() {</span>
+        <span class="s0">return </span><span class="s1">location</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setLocation(<a href="Location.java.html">Location</a> location) {</span>
+        <span class="s0">this</span><span class="s1">.location = location</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">compareTo(<a href="Person.java.html">Person</a> o) {</span>
+        <span class="s3">// https://overcoder.net/q/27595/%D0%BA%D0%B0%D0%BA-%D1%81%D1%80%D0%B0%D0%B2%D0%BD%D0%B8%D0%B2%D0%B0%D1%82%D1%8C-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D1%8B-%D0%BF%D0%BE-%D0%BD%D0%B5%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%B8%D0%BC-%D0%BF%D0%BE%D0%BB%D1%8F%D0%BC</span>
+        <span class="s0">return </span><span class="s1">Comparator.comparing(<a href="Person.java.html">Person</a>::getName).thenComparing(<a href="Person.java.html">Person</a>::getHeight)</span>
+                <span class="s1">.thenComparing(<a href="Person.java.html">Person</a>::getWeight).thenComparing(<a href="Person.java.html">Person</a>::getCreationDate).compare(</span><span class="s0">this, </span><span class="s1">o)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s4">&quot;---------------&quot; </span><span class="s1">+ </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;name: &quot; </span><span class="s1">+ name + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;id: &quot; </span><span class="s1">+ id + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;coordinates: &quot; </span><span class="s1">+ coordinates + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;creationDate: &quot; </span><span class="s1">+ creationDate + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;height: &quot; </span><span class="s1">+ height + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;weight: &quot; </span><span class="s1">+ weight + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;passportID: &quot; </span><span class="s1">+ passportID + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;nationality: &quot; </span><span class="s1">+ nationality + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;location: &quot; </span><span class="s1">+ location + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+</span>
+                <span class="s4">&quot;---------------&quot; </span><span class="s1">+ </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

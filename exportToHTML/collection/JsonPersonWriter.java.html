@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>JsonPersonWriter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+JsonPersonWriter.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">collection</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.google.gson.Gson</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.gson.GsonBuilder</span><span class="s0">;</span>
+<span class="s0">import <a href="../person/DefaultPerson.java.html">person.DefaultPerson</a>;</span>
+<span class="s0">import <a href="../person/Person.java.html">person.Person</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.io.FileNotFoundException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.io.FileOutputStream</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Map</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Specific implementation of the PersonWriter interface for Json format</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">JsonPersonWriter </span><span class="s0">implements <a href="PersonWriter.java.html">PersonWriter</a> </span><span class="s1">{</span>
+
+    <span class="s0">private </span><span class="s1">String fileName</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">JsonPersonWriter(String fileName) {</span>
+        <span class="s0">this</span><span class="s1">.fileName = fileName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">writePersons(Map&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; persons) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">FileOutputStream writer = </span><span class="s0">new </span><span class="s1">FileOutputStream(fileName</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Gson gson = </span><span class="s0">new </span><span class="s1">GsonBuilder().setPrettyPrinting().create()</span><span class="s0">;</span>
+            <span class="s1">String json = gson.toJson(persons)</span><span class="s0">;</span>
+            <span class="s1">writer.write(json.getBytes())</span><span class="s0">;</span>
+            <span class="s1">writer.flush()</span><span class="s0">;</span>
+            <span class="s1">writer.close()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(FileNotFoundException e) {</span>
+            <span class="s0">throw new </span><span class="s1">RuntimeException(e)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(IOException e) {</span>
+            <span class="s0">throw new </span><span class="s1">RuntimeException(e)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

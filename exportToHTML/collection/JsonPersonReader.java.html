@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>JsonPersonReader.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+JsonPersonReader.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">collection</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.google.gson.Gson</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.gson.GsonBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.gson.reflect.TypeToken</span><span class="s0">;</span>
+<span class="s0">import <a href="../person/AbstractPerson.java.html">person.AbstractPerson</a>;</span>
+<span class="s0">import <a href="../person/DefaultPerson.java.html">person.DefaultPerson</a>;</span>
+<span class="s0">import <a href="../person/Person.java.html">person.Person</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.io.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.lang.reflect.Type</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Map</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Specific implementation of the PersonReader interface for Json format</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">JsonPersonReader </span><span class="s0">implements <a href="PersonReader.java.html">PersonReader</a></span><span class="s1">{</span>
+
+    <span class="s0">private </span><span class="s1">String fileName</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">JsonPersonReader(String fileName) {</span>
+        <span class="s0">this</span><span class="s1">.fileName = fileName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">Map&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; readPersons() {</span>
+        <span class="s1">String jsonString = getJsonString()</span><span class="s0">;</span>
+        <span class="s1">Gson gson = </span><span class="s0">new </span><span class="s1">GsonBuilder().setPrettyPrinting().create()</span><span class="s0">;</span>
+        <span class="s1">Type type = </span><span class="s0">new </span><span class="s1">TypeToken&lt;HashMap&lt;String</span><span class="s0">, </span><span class="s1">Person&gt;&gt;(){}.getType()</span><span class="s0">;</span>
+        <span class="s1">Map&lt;String</span><span class="s0">, </span><span class="s1">Person&gt; persons = gson.fromJson(jsonString</span><span class="s0">, </span><span class="s1">type)</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">persons</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private </span><span class="s1">String getJsonString() {</span>
+        <span class="s1">String jsonString = </span><span class="s0">null;</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">InputStream is = </span><span class="s0">new </span><span class="s1">FileInputStream(fileName)</span><span class="s0">;</span>
+            <span class="s1">Reader isr = </span><span class="s0">new </span><span class="s1">InputStreamReader(is)</span><span class="s0">;</span>
+            <span class="s1">StringBuilder sb = </span><span class="s0">new </span><span class="s1">StringBuilder()</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">data = -</span><span class="s3">1</span><span class="s0">;</span>
+            <span class="s0">while </span><span class="s1">((data = isr.read()) != -</span><span class="s3">1</span><span class="s1">) {</span>
+                <span class="s1">sb.append((</span><span class="s0">char</span><span class="s1">) data)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">isr.close()</span><span class="s0">;</span>
+            <span class="s1">jsonString = sb.toString()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(FileNotFoundException e) {</span>
+            <span class="s0">throw new </span><span class="s1">RuntimeException(e)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(IOException e) {</span>
+            <span class="s0">throw new </span><span class="s1">RuntimeException(e)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">if </span><span class="s1">(jsonString != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">return </span><span class="s1">jsonString</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">throw new </span><span class="s1">NullPointerException()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

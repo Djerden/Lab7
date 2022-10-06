@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>DefaultPerson.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+.s5 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+DefaultPerson.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">person</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../exceptions/InvalidPersonFieldException.java.html">exceptions.InvalidPersonFieldException</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.time.ZoneId</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.SortedSet</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.TreeSet</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Concrete implementation of objects of type Person</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">DefaultPerson </span><span class="s0">extends <a href="AbstractPerson.java.html">AbstractPerson</a> </span><span class="s1">{</span>
+    <span class="s3">// Значение поля id должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически</span>
+    <span class="s3">// Поле name не может быть null, Строка не может быть пустой</span>
+    <span class="s3">// Поле coordinates не может быть null</span>
+    <span class="s3">// Поле creationDate не может быть null, Значение этого поля должно генерироваться автоматически</span>
+    <span class="s3">// Поле height может быть null, Значение поля должно быть больше 0</span>
+    <span class="s3">// Поле weight может быть null, Значение поля должно быть больше 0</span>
+    <span class="s3">// Длина строки passportID не должна быть больше 47, Значение этого поля должно быть уникальным, Длина строки должна быть не меньше 8, Поле может быть null</span>
+    <span class="s3">// Поле nationality не может быть null</span>
+    <span class="s3">// Поле location может быть null</span>
+
+    <span class="s0">private static int </span><span class="s1">nextId = </span><span class="s4">1</span><span class="s0">;</span>
+
+    <span class="s0">public static </span><span class="s1">List&lt;Integer&gt; removedIds = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">DefaultPerson() {</span>
+        <span class="s1">setAutomaticallyId()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public </span><span class="s1">DefaultPerson(String name</span><span class="s0">, <a href="Coordinates.java.html">Coordinates</a> </span><span class="s1">coordinates</span><span class="s0">, </span><span class="s1">Double height</span><span class="s0">, </span><span class="s1">Long weight</span><span class="s0">,</span>
+                         <span class="s1">String passportId</span><span class="s0">, <a href="Country.java.html">Country</a> </span><span class="s1">nationality</span><span class="s0">, <a href="Location.java.html">Location</a> </span><span class="s1">location) {</span>
+
+        <span class="s1">setName(name)</span><span class="s0">;</span>
+        <span class="s1">setCoordinates(coordinates)</span><span class="s0">;</span>
+        <span class="s1">setHeight(height)</span><span class="s0">;</span>
+        <span class="s1">setWeight(weight)</span><span class="s0">;</span>
+        <span class="s1">setPassportID(passportId)</span><span class="s0">;</span>
+        <span class="s1">setNationality(nationality)</span><span class="s0">;</span>
+        <span class="s1">setLocation(location)</span><span class="s0">;</span>
+
+        <span class="s3">// Установка даты создания</span>
+        <span class="s1">ZoneId zoneId = ZoneId.of(<a href="Country.java.html">Country</a>.selectZoneId(</span><span class="s0">this</span><span class="s1">.getNationality()))</span><span class="s0">;</span>
+        <span class="s1">setCreationDate(ZonedDateTime.now(zoneId))</span><span class="s0">;</span>
+
+        <span class="s3">// Установка id</span>
+        <span class="s1">setAutomaticallyId()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setAutomaticallyId() {</span>
+        <span class="s0">if </span><span class="s1">(removedIds.isEmpty()) {</span>
+            <span class="s0">super</span><span class="s1">.setId(nextId)</span><span class="s0">;</span>
+            <span class="s1">nextId++</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">super</span><span class="s1">.setId(removedIds.remove(</span><span class="s4">0</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">removeId(<a href="Person.java.html">Person</a> person) {</span>
+        <span class="s1">removedIds.add(person.getId())</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setName(String name) {</span>
+        <span class="s0">if </span><span class="s1">(name == </span><span class="s0">null </span><span class="s1">|| name.trim().length() &lt;= </span><span class="s4">0</span><span class="s1">) </span><span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s5">&quot;Поле name не может быть null или пустым&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">super</span><span class="s1">.setName(name)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setCoordinates(<a href="Coordinates.java.html">Coordinates</a> coordinates) {</span>
+        <span class="s0">if </span><span class="s1">(coordinates == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s5">&quot;Поле coordinates не может быть null&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">super</span><span class="s1">.setCoordinates(coordinates)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setCreationDate(ZonedDateTime creationDate) {</span>
+        <span class="s0">super</span><span class="s1">.setCreationDate(creationDate)</span><span class="s0">;</span>
+
+        <span class="s3">// Сделать автоматическую реализацию</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setHeight(Double height) {</span>
+        <span class="s0">if </span><span class="s1">(height != </span><span class="s0">null </span><span class="s1">&amp;&amp; height &lt;= </span><span class="s4">0</span><span class="s1">) </span><span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s5">&quot;Поле height должно быть больше 0&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">super</span><span class="s1">.setHeight(height)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setWeight(Long weight) {</span>
+        <span class="s0">if </span><span class="s1">(weight != </span><span class="s0">null </span><span class="s1">&amp;&amp; weight &lt;= </span><span class="s4">0</span><span class="s1">) </span><span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s5">&quot;Поле weight должно быть больше 0&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">super</span><span class="s1">.setWeight(weight)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setPassportID(String passportID) {</span>
+        <span class="s0">if </span><span class="s1">(passportID != </span><span class="s0">null </span><span class="s1">&amp;&amp; (passportID.trim().length() &lt; </span><span class="s4">8 </span><span class="s1">|| passportID.trim().length() &gt; </span><span class="s4">47</span><span class="s1">)) {</span>
+            <span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s5">&quot;Длина строки passportID не должна быть меньше 8 и больше 47&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">super</span><span class="s1">.setPassportID(passportID.trim())</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setNationality(<a href="Country.java.html">Country</a> nationality) {</span>
+        <span class="s0">if </span><span class="s1">(nationality == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s5">&quot;Поле nationality не может быть null&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">super</span><span class="s1">.setNationality(nationality)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Country.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Country.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">person</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../exceptions/InvalidPersonFieldException.java.html">exceptions.InvalidPersonFieldException</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.io.Serializable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZoneId</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Class that defines the country of residence for objects of the Person type</span>
+ <span class="s2">* Also, its functionality allows you to return the available countries in the form of a text list,</span>
+ <span class="s2">* select the time zone</span>
+ <span class="s2">*/</span>
+<span class="s0">public enum </span><span class="s1">Country </span><span class="s0">implements </span><span class="s1">Serializable {</span>
+    <span class="s1">CHINA</span><span class="s0">,</span>
+    <span class="s1">SOUTH_KOREA</span><span class="s0">,</span>
+    <span class="s1">NORTH_KOREA</span><span class="s0">;</span>
+
+
+    <span class="s0">public static </span><span class="s1">String selectZoneId(Country country) {</span>
+        <span class="s1">String zoneId = </span><span class="s3">&quot;&quot;</span><span class="s0">;</span>
+        <span class="s0">switch </span><span class="s1">(country) {</span>
+            <span class="s0">case </span><span class="s1">CHINA:</span>
+                <span class="s1">zoneId = </span><span class="s3">&quot;Asia/Shanghai&quot;</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">SOUTH_KOREA:</span>
+                <span class="s1">zoneId = </span><span class="s3">&quot;Asia/Pyongyang&quot;</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">NORTH_KOREA:</span>
+                <span class="s1">zoneId = </span><span class="s3">&quot;Asia/Seoul&quot;</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s0">default</span><span class="s1">:</span>
+                <span class="s1">zoneId = </span><span class="s3">&quot;Australia/Sydney&quot;</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">zoneId</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static </span><span class="s1">String[] returnCountries() {</span>
+        <span class="s1">String[] countries = {</span><span class="s3">&quot;china&quot;</span><span class="s0">, </span><span class="s3">&quot;south_korea&quot;</span><span class="s0">, </span><span class="s3">&quot;north_korea&quot;</span><span class="s1">}</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">countries</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static </span><span class="s1">Country switchCountry(String country) {</span>
+        <span class="s1">Country p = </span><span class="s0">null;</span>
+        <span class="s0">switch </span><span class="s1">(country) {</span>
+            <span class="s0">case </span><span class="s3">&quot;china&quot;</span><span class="s1">:</span>
+                <span class="s1">p = CHINA</span><span class="s0">;</span>
+            <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s3">&quot;south_korea&quot;</span><span class="s1">:</span>
+                <span class="s1">p = SOUTH_KOREA</span><span class="s0">;</span>
+            <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s3">&quot;north_korea&quot;</span><span class="s1">:</span>
+                <span class="s1">p = NORTH_KOREA</span><span class="s0">;</span>
+            <span class="s0">break;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">p</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

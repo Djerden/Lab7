@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>HistoryCommand.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+HistoryCommand.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">commands</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../client/Application.java.html">application.Application</a>;</span>
+<span class="s0">import <a href="../io/Writer.java.html">io.Writer</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.util.LinkedList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ListIterator</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Queue</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">*  Command that outputs the last 9 commands used</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">HistoryCommand </span><span class="s0">implements <a href="Command.java.html">Command</a></span><span class="s1">{</span>
+
+    <span class="s0">private <a href="../client/Application.java.html">Application</a> </span><span class="s1">application</span><span class="s0">;</span>
+    <span class="s0">private <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Queue&lt;Command&gt; commands</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">HistoryCommand(<a href="../client/Application.java.html">Application</a> application</span><span class="s0">, <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer) {</span>
+        <span class="s0">this</span><span class="s1">.application = application</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.writer = writer</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">execute() {</span>
+        <span class="s1">commands = application.getHistory()</span><span class="s0">;</span>
+        <span class="s1">ListIterator&lt;Command&gt; listIterator = ((LinkedList&lt;Command&gt;)commands).listIterator(commands.size())</span><span class="s0">;</span>
+        <span class="s0">while </span><span class="s1">(listIterator.hasPrevious()) {</span>
+            <span class="s1">writer.write(listIterator.previous().toString())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s3">&quot;history&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

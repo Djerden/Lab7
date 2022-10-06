@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Client.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Client.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">client</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">collection.*</span><span class="s0">;</span>
+<span class="s0">import <a href="../commands/Command.java.html">commands.Command</a>;</span>
+<span class="s0">import <a href="../exceptions/AbsenceArgumentException.java.html">exceptions.AbsenceArgumentException</a>;</span>
+<span class="s0">import <a href="../exceptions/NoInputException.java.html">exceptions.NoInputException</a>;</span>
+<span class="s0">import <a href="../exceptions/UnknownCommandException.java.html">exceptions.UnknownCommandException</a>;</span>
+<span class="s0">import <a href="../io/CommandReader.java.html">command_reader.CommandReader</a>;</span>
+<span class="s0">import <a href="../io/ConsoleCommandReader.java.html">io.ConsoleCommandReader</a>;</span>
+<span class="s0">import <a href="../io/ConsoleWriter.java.html">io.ConsoleWriter</a>;</span>
+<span class="s0">import <a href="../io/Writer.java.html">io.Writer</a>;</span>
+
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.LinkedList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.PriorityQueue</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Queue</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Client implementation of the Application interface</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">Client </span><span class="s0">implements <a href="Application.java.html">Application</a> </span><span class="s1">{</span>
+    <span class="s0">private </span><span class="s1">String fileName</span><span class="s0">;</span>
+    <span class="s0">private boolean </span><span class="s1">isRunning</span><span class="s0">;</span>
+    <span class="s0">private <a href="../commands/Command.java.html">Command</a> </span><span class="s1">command</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Queue&lt;Command&gt; listOfLastCommands</span><span class="s0">;</span>
+    <span class="s0">private <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer</span><span class="s0">;</span>
+
+    <span class="s0">private <a href="../collection/PersonReader.java.html">PersonReader</a> </span><span class="s1">personReader</span><span class="s0">;</span>
+    <span class="s0">private <a href="../collection/PersonWriter.java.html">PersonWriter</a> </span><span class="s1">personWriter</span><span class="s0">;</span>
+    <span class="s0">private <a href="../collection/PersonCollection.java.html">PersonCollection</a> </span><span class="s1">personCollection</span><span class="s0">;</span>
+
+    <span class="s0">private <a href="CommandFactory.java.html">CommandFactory</a> </span><span class="s1">commandFactory</span><span class="s0">;</span>
+    <span class="s0">private <a href="../io/CommandReader.java.html">CommandReader</a> </span><span class="s1">commandReader</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">Client(String fileName) {</span>
+        <span class="s0">this</span><span class="s1">.fileName = fileName</span><span class="s0">;</span>
+        <span class="s1">writer = </span><span class="s0">new <a href="../io/ConsoleWriter.java.html">ConsoleWriter</a></span><span class="s1">()</span><span class="s0">;</span>
+
+        <span class="s1">personReader = </span><span class="s0">new <a href="../collection/JsonPersonReader.java.html">JsonPersonReader</a></span><span class="s1">(fileName)</span><span class="s0">;</span>
+        <span class="s1">personWriter = </span><span class="s0">new <a href="../collection/JsonPersonWriter.java.html">JsonPersonWriter</a></span><span class="s1">(fileName)</span><span class="s0">;</span>
+        <span class="s1">personCollection = </span><span class="s0">new <a href="../collection/HashMapPersonCollection.java.html">HashMapPersonCollection</a></span><span class="s1">(personReader</span><span class="s0">, </span><span class="s1">personWriter)</span><span class="s0">;</span>
+
+        <span class="s1">commandFactory = </span><span class="s0">new <a href="CommandSimpleFactory.java.html">CommandSimpleFactory</a></span><span class="s1">(personCollection</span><span class="s0">, this, </span><span class="s1">writer)</span><span class="s0">;</span>
+        <span class="s1">commandReader = </span><span class="s0">new <a href="../io/ConsoleCommandReader.java.html">ConsoleCommandReader</a></span><span class="s1">(commandFactory</span><span class="s0">, </span><span class="s1">writer)</span><span class="s0">;</span>
+        <span class="s1">listOfLastCommands = </span><span class="s0">new </span><span class="s1">LinkedList&lt;&gt;()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">start() {</span>
+        <span class="s1">isRunning = </span><span class="s0">true;</span>
+        <span class="s1">writer.write(</span><span class="s3">&quot;Для справки воспользуйтесь командой </span><span class="s0">\&quot;</span><span class="s3">help</span><span class="s0">\&quot;</span><span class="s3">&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">while</span><span class="s1">(isRunning) {</span>
+            <span class="s0">try </span><span class="s1">{</span>
+                <span class="s1">findAndExecuteCommand()</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">catch </span><span class="s1">(IOException e) {</span>
+                <span class="s1">writer.write(</span><span class="s3">&quot;Что-то с вводом/выводом...&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">catch </span><span class="s1">(<a href="../exceptions/UnknownCommandException.java.html">UnknownCommandException</a> e) {</span>
+                <span class="s1">writer.write(</span><span class="s3">&quot;Попробуйте еще раз&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">catch </span><span class="s1">(NullPointerException e) {</span>
+                <span class="s1">writer.write(</span><span class="s3">&quot;Ошибка ввода&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">catch </span><span class="s1">(<a href="../exceptions/AbsenceArgumentException.java.html">AbsenceArgumentException</a> e) {</span>
+                <span class="s1">writer.write(</span><span class="s3">&quot;Эта команда предполагает наличие аргумента&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">findAndExecuteCommand() </span><span class="s0">throws </span><span class="s1">IOException {</span>
+        <span class="s1">command = commandReader.readCommands()</span><span class="s0">;</span>
+        <span class="s1">command.execute()</span><span class="s0">;</span>
+        <span class="s1">addCommandToHistory(command)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">Queue&lt;Command&gt; getHistory() {</span>
+        <span class="s0">return </span><span class="s1">listOfLastCommands</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">private void </span><span class="s1">addCommandToHistory(<a href="../commands/Command.java.html">Command</a> com) {</span>
+        <span class="s0">if </span><span class="s1">(listOfLastCommands.size() &gt;= </span><span class="s4">9</span><span class="s1">) {</span>
+            <span class="s1">listOfLastCommands.poll()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s1">listOfLastCommands.offer(com)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">exit() {</span>
+        <span class="s1">isRunning = </span><span class="s0">false;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

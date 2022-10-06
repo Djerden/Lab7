@@ -1,0 +1,237 @@
+<html>
+<head>
+<title>ConsoleCommandReader.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ConsoleCommandReader.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">io</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../client/CommandFactory.java.html">application.CommandFactory</a>;</span>
+<span class="s0">import <a href="../client/CommandSimpleFactory.java.html">client.CommandSimpleFactory</a>;</span>
+<span class="s0">import <a href="../commands/Command.java.html">commands.Command</a>;</span>
+<span class="s0">import <a href="../commands/ObjectArgCommand.java.html">commands.ObjectArgCommand</a>;</span>
+<span class="s0">import <a href="../commands/SimpleArgCommand.java.html">commands.SimpleArgCommand</a>;</span>
+<span class="s0">import <a href="../exceptions/AbsenceArgumentException.java.html">exceptions.AbsenceArgumentException</a>;</span>
+<span class="s0">import <a href="../exceptions/InvalidPersonFieldException.java.html">exceptions.InvalidPersonFieldException</a>;</span>
+<span class="s0">import <a href="../exceptions/NoInputException.java.html">exceptions.NoInputException</a>;</span>
+<span class="s0">import <a href="../exceptions/UnknownCommandException.java.html">exceptions.UnknownCommandException</a>;</span>
+<span class="s0">import </span><span class="s1">person.*</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.io.InputStreamReader</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZoneId</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Arrays</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Console implementation of the CommandReader interface</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">ConsoleCommandReader </span><span class="s0">implements <a href="CommandReader.java.html">CommandReader</a> </span><span class="s1">{</span>
+    <span class="s0">private <a href="Writer.java.html">Writer</a> </span><span class="s1">writer</span><span class="s0">;</span>
+    <span class="s0">private <a href="../client/CommandFactory.java.html">CommandFactory</a> </span><span class="s1">factory</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">BufferedReader bufferedReader = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(System.in))</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">ConsoleCommandReader(<a href="../client/CommandFactory.java.html">CommandFactory</a> factory</span><span class="s0">, <a href="Writer.java.html">Writer</a> </span><span class="s1">writer) {</span>
+        <span class="s0">this</span><span class="s1">.factory = factory</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.writer = writer</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public <a href="../commands/Command.java.html">Command</a> </span><span class="s1">readCommands() </span><span class="s0">throws </span><span class="s1">IOException {</span>
+
+        <span class="s1">String input = bufferedReader.readLine()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(input == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите что-то более осмысленное&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s0">throw new </span><span class="s1">NullPointerException()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">List&lt;String&gt; commandParameters = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s1">commandParameters.addAll(Arrays.asList(input.trim().toLowerCase().split(</span><span class="s3">&quot;</span><span class="s0">\\</span><span class="s3">s+&quot;</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(commandParameters.size() &lt; </span><span class="s4">2</span><span class="s1">) {</span>
+            <span class="s1">commandParameters.add(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <a href="../commands/Command.java.html">Command</a> <span class="s1">command = factory.chooseCommand(commandParameters.get(</span><span class="s4">0</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(command == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">throw new <a href="../exceptions/UnknownCommandException.java.html">UnknownCommandException</a></span><span class="s1">()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">if </span><span class="s1">(command </span><span class="s0">instanceof <a href="../commands/SimpleArgCommand.java.html">SimpleArgCommand</a></span><span class="s1">) {</span>
+            <span class="s1">((<a href="../commands/SimpleArgCommand.java.html">SimpleArgCommand</a>) command).setSimpleArg(commandParameters.get(</span><span class="s4">1</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">if </span><span class="s1">(command </span><span class="s0">instanceof <a href="../commands/ObjectArgCommand.java.html">ObjectArgCommand</a></span><span class="s1">) {</span>
+            <span class="s1">((<a href="../commands/ObjectArgCommand.java.html">ObjectArgCommand</a>)command).setNeededObjects(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+
+        <span class="s0">return </span><span class="s1">command</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public <a href="../person/Person.java.html">Person</a> </span><span class="s1">readPerson() {</span>
+        <a href="../person/Person.java.html">Person</a> <span class="s1">person = </span><span class="s0">new <a href="../person/DefaultPerson.java.html">DefaultPerson</a></span><span class="s1">()</span><span class="s0">;</span>
+        <span class="s1">writer.write(</span><span class="s3">&quot;Введите данные нового человека ниже: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">readName(person)</span><span class="s0">;</span>
+        <span class="s1">readCoordinates(person)</span><span class="s0">;</span>
+        <span class="s1">readHeight(person)</span><span class="s0">;</span>
+        <span class="s1">readWeight(person)</span><span class="s0">;</span>
+        <span class="s1">readPassportId(person)</span><span class="s0">;</span>
+        <span class="s1">readNationality(person)</span><span class="s0">;</span>
+        <span class="s1">readLocation(person)</span><span class="s0">;</span>
+        <span class="s1">setCreationDate(person)</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">person</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public <a href="../person/Country.java.html">Country</a> </span><span class="s1">readCountry() {</span>
+        <a href="../person/Country.java.html">Country</a> <span class="s1">country = </span><span class="s0">null;</span>
+        <span class="s1">writer.write(</span><span class="s3">&quot;Выберите страну из списка: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">String[] countries = <a href="../person/Country.java.html">Country</a>.returnCountries()</span><span class="s0">;</span>
+
+        <span class="s0">for </span><span class="s1">(String i : countries) {</span>
+            <span class="s1">writer.write(i)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">String input = bufferedReader.readLine().trim().toLowerCase()</span><span class="s0">;</span>
+            <span class="s1">country = <a href="../person/Country.java.html">Country</a>.switchCountry(input)</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(country == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s3">&quot;Данной страны нет в списке&quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(IOException | <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readCountry()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">country</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">readName(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите имя: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">String name = bufferedReader.readLine().trim().toLowerCase()</span><span class="s0">;</span>
+            <span class="s1">person.setName(name)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(<a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> | IOException e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readName(person)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">readCoordinates(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <a href="../person/Coordinates.java.html">Coordinates</a> <span class="s1">coordinates = </span><span class="s0">new <a href="../person/Coordinates.java.html">Coordinates</a></span><span class="s1">()</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите координаты человека: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Координата X:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Integer x = Integer.valueOf(bufferedReader.readLine().trim())</span><span class="s0">;</span>
+            <span class="s1">coordinates.setX(x)</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Координата Y:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Integer y = Integer.valueOf(bufferedReader.readLine().trim())</span><span class="s0">;</span>
+            <span class="s1">coordinates.setY(y)</span><span class="s0">;</span>
+            <span class="s1">person.setCoordinates(coordinates)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch</span><span class="s1">(<a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> | IOException | NumberFormatException e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readCoordinates(person)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">readHeight(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите рост человека&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Double height = Double.valueOf(bufferedReader.readLine().trim())</span><span class="s0">;</span>
+            <span class="s1">person.setHeight(height)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(<a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> | IOException | NumberFormatException e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readHeight(person)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">readWeight(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите Вес человека&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Long weight = Long.valueOf(bufferedReader.readLine().trim())</span><span class="s0">;</span>
+            <span class="s1">person.setWeight(weight)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(<a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> | IOException | NumberFormatException e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readWeight(person)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">readPassportId(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите паспортные данные человека: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">String passportId = bufferedReader.readLine().trim()</span><span class="s0">;</span>
+            <span class="s1">person.setPassportID(passportId)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(<a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> | IOException e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readPassportId(person)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">readNationality(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <a href="../person/Country.java.html">Country</a> <span class="s1">p</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Выберите страну рождения человека из предложенных вариантов: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s0">for </span><span class="s1">(String i : <a href="../person/Country.java.html">Country</a>.returnCountries()) {</span>
+                <span class="s1">writer.write(i)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">String input = bufferedReader.readLine().trim().toLowerCase()</span><span class="s0">;</span>
+            <a href="../person/Country.java.html">Country</a> <span class="s1">country = <a href="../person/Country.java.html">Country</a>.switchCountry(input)</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(country == </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">throw new <a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a></span><span class="s1">(</span><span class="s3">&quot;Данной страны нет в списке&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">person.setNationality(country)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(<a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> | IOException e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readNationality(person)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">readLocation(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <a href="../person/Location.java.html">Location</a> <span class="s1">location = </span><span class="s0">new <a href="../person/Location.java.html">Location</a></span><span class="s1">()</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите координаты и имя населенного пункта: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Координата X: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Double x = Double.valueOf(bufferedReader.readLine().trim())</span><span class="s0">;</span>
+            <span class="s1">location.setX(x)</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Координата Y: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s0">double </span><span class="s1">y = Double.valueOf(bufferedReader.readLine().trim())</span><span class="s0">;</span>
+            <span class="s1">location.setY(y)</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Введите название населенного пункта: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">String name = bufferedReader.readLine().trim()</span><span class="s0">;</span>
+            <span class="s1">location.setName(name)</span><span class="s0">;</span>
+            <span class="s1">person.setLocation(location)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch</span><span class="s1">(<a href="../exceptions/InvalidPersonFieldException.java.html">InvalidPersonFieldException</a> | IOException | NumberFormatException e) {</span>
+            <span class="s1">writer.write(e.getMessage())</span><span class="s0">;</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Некорректный ввод, попробуйте еще раз: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">readLocation(person)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">private void </span><span class="s1">setCreationDate(<a href="../person/Person.java.html">Person</a> person) {</span>
+        <span class="s1">ZoneId zoneId = ZoneId.of(<a href="../person/Country.java.html">Country</a>.selectZoneId(person.getNationality()))</span><span class="s0">;</span>
+        <span class="s1">person.setCreationDate(ZonedDateTime.now(zoneId))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

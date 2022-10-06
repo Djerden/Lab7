@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>HelpCommand.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+HelpCommand.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">commands</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../io/Writer.java.html">io.Writer</a>;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Help command</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">HelpCommand </span><span class="s0">implements <a href="Command.java.html">Command</a></span><span class="s1">{</span>
+    <span class="s0">private </span><span class="s1">String helpInformation = </span><span class="s3">&quot;    help : вывести справку по доступным командам</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    insert {number} : добавить нового человека с заданным номером</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    update {id} : обновить значение элемента коллекции, id которого равен заданному</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    remove_key {number} : удалить человека из коллекции по его номеру</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    clear : очистить коллекцию</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    save : сохранить коллекцию в файл</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    load : загрузить данные в коллекцию из файла</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    exit : завершить программу (без сохранения в файл)</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    remove_greater : удалить из коллекции все элементы, превышающие заданный</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    history : вывести последние 9 команд</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    remove_greater_key {number} : удалить из коллекции все элементы, ключ которых превышает заданный</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    remove_any_by_nationality : удалить из коллекции один элемент, значение поля nationality которого эквивалентно заданному</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    max_by_weight : вывести любой объект из коллекции, значение поля weight которого является максимальным</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+            <span class="s3">&quot;    filter_less_than_passport_id {passportId}: вывести элементы, значение поля passportID которых меньше заданного&quot;</span><span class="s0">;</span>
+
+    <span class="s0">private <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">HelpCommand(<a href="../io/Writer.java.html">Writer</a> writer) {</span>
+        <span class="s0">this</span><span class="s1">.writer = writer</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">execute() {</span>
+        <span class="s1">writer.write(helpInformation)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s3">&quot;help&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

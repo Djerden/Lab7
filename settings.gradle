@@ -1,2 +1,5 @@
 rootProject.name = 'second-semestr-project'
+include 'client'
+include 'server'
+include 'common'
 

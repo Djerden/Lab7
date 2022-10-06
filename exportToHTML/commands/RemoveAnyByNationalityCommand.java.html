@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>RemoveAnyByNationalityCommand.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RemoveAnyByNationalityCommand.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">commands</span><span class="s0">;</span>
+
+<span class="s0">import <a href="../collection/PersonCollection.java.html">collection.PersonCollection</a>;</span>
+<span class="s0">import <a href="../io/CommandReader.java.html">command_reader.CommandReader</a>;</span>
+<span class="s0">import <a href="../io/Writer.java.html">io.Writer</a>;</span>
+<span class="s0">import <a href="../person/Country.java.html">person.Country</a>;</span>
+<span class="s0">import <a href="../person/Person.java.html">person.Person</a>;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* A command that allows you to delete an object from a collection with a given country</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">RemoveAnyByNationalityCommand </span><span class="s0">implements <a href="ObjectArgCommand.java.html">ObjectArgCommand</a> </span><span class="s1">{</span>
+
+    <span class="s0">private <a href="../collection/PersonCollection.java.html">PersonCollection</a> </span><span class="s1">personCollection</span><span class="s0">;</span>
+    <span class="s0">private <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer</span><span class="s0">;</span>
+    <span class="s0">private <a href="../person/Country.java.html">Country</a> </span><span class="s1">country</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">RemoveAnyByNationalityCommand(<a href="../collection/PersonCollection.java.html">PersonCollection</a> personCollection</span><span class="s0">, <a href="../io/Writer.java.html">Writer</a> </span><span class="s1">writer) {</span>
+        <span class="s0">this</span><span class="s1">.personCollection = personCollection</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.writer = writer</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">execute() {</span>
+        <a href="../person/Person.java.html">Person</a> <span class="s1">person = personCollection.remove_any_by_nationality(country)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(person == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Элементов с выбранной страной нет в коллекции&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">writer.write(</span><span class="s3">&quot;Удален объект: name = &quot; </span><span class="s1">+ person.getName() + </span><span class="s3">&quot;, id = &quot; </span><span class="s1">+ person.getId())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setSimpleArg(String str) {</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">setNeededObjects(<a href="../io/CommandReader.java.html">CommandReader</a> reader) {</span>
+        <span class="s1">country = reader.readCountry()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s3">&quot;remove_any_by_nationality&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
