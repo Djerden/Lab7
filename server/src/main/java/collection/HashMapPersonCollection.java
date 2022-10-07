@@ -5,10 +5,8 @@ import person.DefaultPerson;
 import person.Person;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Specific implementation of the PersonCollection interface with data stored in hashmap
@@ -121,7 +119,8 @@ public class HashMapPersonCollection implements PersonCollection {
     }
 
     @Override
-    public Person max_by_weight() {
+    public Optional<Person> max_by_weight() { // сделать со стримами
+        /*
         String maxKey = "";
         Long maxWeight = 0L;
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
@@ -131,16 +130,31 @@ public class HashMapPersonCollection implements PersonCollection {
             }
         }
         return personCollection.get(maxKey);
+         */
+
+        Optional<Person> maxWeightPerson = personCollection.values().stream().max(new WeightComparator());
+        if (maxWeightPerson.isPresent()) {
+            return maxWeightPerson;
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public List<Person> filter_less_than_passport_id(String passportId) {
+    public List<Person> filter_less_than_passport_id(String passportId) { // сделать со стримами
+        /*
         List<Person> tempList = new ArrayList<>();
         for (Person p : personCollection.values()) {
             if (p.getPassportID().compareTo(passportId) < 0) {
                 tempList.add(p);
             }
         }
+        return tempList;
+         */
+
+        List<Person> tempList = personCollection.values().stream()
+                .filter(person -> person.getPassportID().compareTo(passportId) < 0)
+                .collect(Collectors.toList());
         return tempList;
     }
     @Override
