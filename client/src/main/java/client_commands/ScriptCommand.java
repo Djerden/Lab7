@@ -12,6 +12,8 @@ import io.Writer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ScriptCommand implements SimpleArgCommand {
@@ -22,6 +24,8 @@ public class ScriptCommand implements SimpleArgCommand {
     private Writer writer;
 
     private Scanner scanner;
+
+    private List<Command> commandList = new ArrayList<>();
 
     public ScriptCommand(CommandFactory factory, Writer writer) {
         this.factory = factory;
@@ -42,7 +46,7 @@ public class ScriptCommand implements SimpleArgCommand {
             while (scanner.hasNextLine()) {
                 try {
                     Command command = commandReader.readCommands();
-                    command.execute();
+                    commandList.add(command);
                 } catch (UnknownCommandException e) {
                     writer.write("Нечитаемая команда");
                 } catch (NullPointerException e) {
@@ -76,6 +80,10 @@ public class ScriptCommand implements SimpleArgCommand {
     @Override
     public String toString() {
         return "execute_script";
+    }
+
+    public List<Command> getCommandList() {
+        return commandList;
     }
 
 }

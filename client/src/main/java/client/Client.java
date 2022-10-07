@@ -18,6 +18,7 @@ import data.Response;
 import java.io.*;
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -74,8 +75,16 @@ public class Client implements Application, HistoryFunction {
     private void findAndExecuteCommand() throws IOException {
         command = commandReader.readCommands();
         addCommandToHistory(command);
-        if (command instanceof HelpCommand || command instanceof ExitCommand || command instanceof HistoryCommand || command instanceof ScriptCommand) {
+        if (command instanceof HelpCommand || command instanceof ExitCommand || command instanceof HistoryCommand) {
             command.execute();
+
+        } else if (command instanceof ScriptCommand) {
+            command.execute();
+            List<Command> commandList = ((ScriptCommand)command).getCommandList();
+            for (Command i : commandList) {
+                sendCommandToServer(i);
+            }
+
         } else {
             sendCommandToServer(command);
         }
