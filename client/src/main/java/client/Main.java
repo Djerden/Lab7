@@ -11,11 +11,11 @@ import java.net.InetAddress;
 public class Main {
     public static void main(String[] args) {
 
-        try {
             String address = "localhost";
             int port = 8080;
             Application client = new Client(address, port);
 
+        try {
             client.start();
         } catch (Exception e) {
             e.printStackTrace();

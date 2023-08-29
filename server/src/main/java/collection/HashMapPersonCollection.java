@@ -119,7 +119,7 @@ public class HashMapPersonCollection implements PersonCollection {
     }
 
     @Override
-    public Optional<Person> max_by_weight() { // сделать со стримами
+    public Person max_by_weight() { // сделать со стримами
         /*
         String maxKey = "";
         Long maxWeight = 0L;
@@ -134,7 +134,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
         Optional<Person> maxWeightPerson = personCollection.values().stream().max(new WeightComparator());
         if (maxWeightPerson.isPresent()) {
-            return maxWeightPerson;
+            return maxWeightPerson.get();
         } else {
             return null;
         }

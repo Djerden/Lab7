@@ -4,7 +4,6 @@ import person.Country;
 import person.Person;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Interface that provides the necessary functionality for collection
@@ -22,7 +21,7 @@ public interface PersonCollection {
     void remove_greater(Person person); // удалить из коллекции все элементы, превышающие заданный
     void remove_greater_key(String key); // удалить из коллекции все элементы, ключ которых превышает заданный
     Person remove_any_by_nationality(Country country); // удалить из коллекции один элемент, значение поля nationality которого эквивалентно заданному
-    Optional<Person> max_by_weight(); // вывести любой объект из коллекции, значение поля weight которого является максимальным
+    Person max_by_weight(); // вывести любой объект из коллекции, значение поля weight которого является максимальным
     List<Person> filter_less_than_passport_id(String passportId); // вывести элементы, значение поля passportID которых меньше заданного
 
     boolean isEmpty();

@@ -23,6 +23,9 @@ public class ServerConnectionManagerImpl implements ServerConnectionManager{
         serverSocketChannel.register(selector, ops);
     }
 
+    <T> T factory(Class<T> clazz) throws InstantiationException, IllegalAccessException {
+        return clazz.newInstance();
+    }
     @Override
     public Selector listen() throws IOException {
         selector.select();

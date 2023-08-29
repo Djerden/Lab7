@@ -15,6 +15,8 @@ import io.ConsoleWriter;
 import io.Writer;
 import network.*;
 import data.Response;
+import user.Auth;
+
 import java.io.*;
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
@@ -41,6 +43,11 @@ public class Client implements Application, HistoryFunction {
     private RequestSender requestSender = new RequestSenderImpl();
     private ResponseReader responseReader = new ResponseReaderImpl();
 
+    // authorizaion
+/*    private boolean isLogin;
+    private Auth auth;*/
+
+
     public Client(String address, int port) {
         this.address = address;
         this.port = port;
@@ -56,6 +63,10 @@ public class Client implements Application, HistoryFunction {
     @Override
     public void start() {
         isRunning = true;
+        /*isLogin = false;
+        while (!isLogin) {     Починить, когда реализую авторизацию
+
+        }*/
         writer.write("Для справки воспользуйтесь командой \"help\"");
         while(isRunning) {
             try {
@@ -89,6 +100,12 @@ public class Client implements Application, HistoryFunction {
             sendCommandToServer(command);
         }
     }
+
+    private void logIn() {
+
+    }
+
+
 
     private void sendCommandToServer(Command command) {
         // реализация
