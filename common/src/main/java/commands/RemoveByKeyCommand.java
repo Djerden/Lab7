@@ -18,7 +18,7 @@ public class RemoveByKeyCommand implements SimpleArgCommand {
     @Override
     public void execute() {
         personCollection.remove_key(number);
-        result = "Человек с номером " + number + " удален";
+        result = "The person with the number " + number + " deleted";
     }
 
     @Override
@@ -36,7 +36,7 @@ public class RemoveByKeyCommand implements SimpleArgCommand {
         if (str != null) {
             number = str;
         } else {
-            throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - паспорт");
+            throw new AbsenceArgumentException("For this command, you must pass the passport argument");
         }
     }
     @Override

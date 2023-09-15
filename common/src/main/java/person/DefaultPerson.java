@@ -11,15 +11,15 @@ import java.util.List;
  * Concrete implementation of objects of type Person
  */
 public class DefaultPerson extends AbstractPerson {
-    // Значение поля id должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    // Поле name не может быть null, Строка не может быть пустой
-    // Поле coordinates не может быть null
-    // Поле creationDate не может быть null, Значение этого поля должно генерироваться автоматически
-    // Поле height может быть null, Значение поля должно быть больше 0
-    // Поле weight может быть null, Значение поля должно быть больше 0
-    // Длина строки passportID не должна быть больше 47, Значение этого поля должно быть уникальным, Длина строки должна быть не меньше 8, Поле может быть null
-    // Поле nationality не может быть null
-    // Поле location может быть null
+    /* Значение поля id должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+     Поле name не может быть null, Строка не может быть пустой
+     Поле coordinates не может быть null
+     Поле creationDate не может быть null, Значение этого поля должно генерироваться автоматически
+     Поле height может быть null, Значение поля должно быть больше 0
+     Поле weight может быть null, Значение поля должно быть больше 0
+     Длина строки passportID не должна быть больше 47, Значение этого поля должно быть уникальным, Длина строки должна быть не меньше 8, Поле может быть null
+     Поле nationality не может быть null
+     Поле location может быть null*/
 
     private static int nextId = 1;
 
@@ -62,13 +62,13 @@ public class DefaultPerson extends AbstractPerson {
 
     @Override
     public void setName(String name) {
-        if (name == null || name.trim().length() <= 0) throw new InvalidPersonFieldException("Поле name не может быть null или пустым");
+        if (name == null || name.trim().length() <= 0) throw new InvalidPersonFieldException("The name field cannot be null or empty");
         super.setName(name);
     }
 
     @Override
     public void setCoordinates(Coordinates coordinates) {
-        if (coordinates == null) throw new InvalidPersonFieldException("Поле coordinates не может быть null");
+        if (coordinates == null) throw new InvalidPersonFieldException("The coordinates field cannot be null");
         super.setCoordinates(coordinates);
     }
 
@@ -81,27 +81,27 @@ public class DefaultPerson extends AbstractPerson {
 
     @Override
     public void setHeight(Double height) {
-        if (height != null && height <= 0) throw new InvalidPersonFieldException("Поле height должно быть больше 0");
+        if (height != null && height <= 0) throw new InvalidPersonFieldException("The height field must be greater than 0");
         super.setHeight(height);
     }
 
     @Override
     public void setWeight(Long weight) {
-        if (weight != null && weight <= 0) throw new InvalidPersonFieldException("Поле weight должно быть больше 0");
+        if (weight != null && weight <= 0) throw new InvalidPersonFieldException("The weight field must be greater than 0");
         super.setWeight(weight);
     }
 
     @Override
     public void setPassportID(String passportID) {
         if (passportID != null && (passportID.trim().length() < 8 || passportID.trim().length() > 47)) {
-            throw new InvalidPersonFieldException("Длина строки passportID не должна быть меньше 8 и больше 47");
+            throw new InvalidPersonFieldException("The length of the passportID string must not be less than 8 and greater than 47");
         }
         super.setPassportID(passportID.trim());
     }
 
     @Override
     public void setNationality(Country nationality) {
-        if (nationality == null) throw new InvalidPersonFieldException("Поле nationality не может быть null");
+        if (nationality == null) throw new InvalidPersonFieldException("The nationality field cannot be null");
         super.setNationality(nationality);
     }
 

@@ -17,7 +17,7 @@ public class ClearCommand implements Command {
     public void execute() {
         personCollection.clear();
         if (personCollection.isEmpty()) {
-            result = "Коллекция очищена";
+            result = "The collection has been cleared";
         }
     }
 

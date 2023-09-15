@@ -2,13 +2,9 @@ package server;
 
 import application.Application;
 import collection.HashMapPersonCollection;
-import collection.JsonPersonReader;
-import collection.JsonPersonWriter;
 import collection.PersonCollection;
 import commands.Command;
 import data.Response;
-import exceptions.IncorrectFileSettings;
-import exceptions.UnknownCommandException;
 import network.*;
 import server_commands.ServerCommand;
 import server_commands.ServerCommandSimpleFactory;
@@ -24,15 +20,14 @@ import java.util.List;
 
 public class Server implements Application {
 
-    private static String dataFileName = System.getenv("DATA_TO_LAB5");
+    //private static String dataFileName = System.getenv("DATA_TO_LAB5");
 
     private final CommandReader commandReader = new CommandReaderImpl();
     private final ResponseWriter responseWriter = new ResponseWriterImpl();
     private final ResponseSender responseSender = new ResponseSenderImpl();
     private final ServerConnectionManager serverConnectionManager = new ServerConnectionManagerImpl();
 
-    private final PersonCollection personCollection = new HashMapPersonCollection(new JsonPersonReader(dataFileName),
-            new JsonPersonWriter(dataFileName));
+    private final PersonCollection personCollection = new HashMapPersonCollection(); //new JsonPersonReader(dataFileName), new JsonPersonWriter(dataFileName)
 
     private ServerCommandSimpleFactory factory = new ServerCommandSimpleFactory(this, personCollection);
 
@@ -44,18 +39,18 @@ public class Server implements Application {
 
     @Override
     public void start() {
-        if (dataFileName == null) {
-            throw new IncorrectFileSettings();
-        }
+//        if (dataFileName == null) {
+//            throw new IncorrectFileSettings();
+//        }
         consoleStart();
         log.Logback.getLogger().info("server was started");
         isRunning = true;
         Command command;
 
-        try {
-            personCollection.loadData();
-            log.Logback.getLogger().info("data was parsed");
-        } catch (Exception e) {}
+//        try {
+//            personCollection.loadData();
+//            log.Logback.getLogger().info("data was parsed");
+//        } catch (Exception e) {}
 
         Selector selector;
         while (isRunning) {
@@ -74,7 +69,9 @@ public class Server implements Application {
                     command = commandReader.readCommand(selector);
                     log.Logback.getLogger().info("command was received");
                     command.setCollection(personCollection);
+
                     command.execute();
+
                     log.Logback.getLogger().info("command was executed");
                     result = command.getResult();
 
@@ -105,7 +102,7 @@ public class Server implements Application {
 
     @Override
     public void exit() throws IOException {
-        personCollection.save();
+        //personCollection.save();
         log.Logback.getLogger().info("collection was saved");
         serverConnectionManager.stop();
         isRunning = false;
@@ -122,7 +119,7 @@ public class Server implements Application {
                     commandParameters.addAll(Arrays.asList(input.trim().toLowerCase().split("\\s+")));
                     ServerCommand serverCommand = factory.chooseCommand(commandParameters.get(0));
                     if (serverCommand == null) {
-                        System.out.println("Некорректный ввод команды");
+                        System.out.println("Incorrect command input");
                         continue;
                     }
                     serverCommand.execute();

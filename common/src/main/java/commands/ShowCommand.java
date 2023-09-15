@@ -20,7 +20,7 @@ public class ShowCommand implements Command {
 
         List<Person> tempList = personCollection.show();
         if (tempList.isEmpty()) {
-            result = "Коллекция пуста";
+            result = "The collection is empty";
         } else {
             for (Person i : tempList) {
                 result = result + i.toString() + "\n";

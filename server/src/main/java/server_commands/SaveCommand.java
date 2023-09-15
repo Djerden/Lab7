@@ -12,8 +12,7 @@ public class SaveCommand implements ServerCommand{
 
     @Override
     public void execute() {
-        personCollection.save();
+        //personCollection.save();
         log.Logback.getLogger().info("collection was saved");
-        System.out.println("Коллекция сохранена");
     }
 }

@@ -22,7 +22,7 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
 
         List<Person> tempList = personCollection.filter_less_than_passport_id(passportId);
         if (tempList.isEmpty()) {
-            result = "Таких элементов нет";
+            result = "There are no such elements";
         } else {
             for (Person i : tempList) {
                 result = result + i.toString() + "\n";
@@ -45,7 +45,7 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
         if (str != null) {
             passportId = str;
         } else {
-            throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - паспорт");
+            throw new AbsenceArgumentException("For this command, you must pass the passport argument");
         }
 
     }

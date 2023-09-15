@@ -3,7 +3,7 @@ package exceptions;
 public class UnknownCommandException extends RuntimeException {
 
     public UnknownCommandException() {
-        super("Неизвестная команда");
+        super("Unknown command");
     }
 
     public UnknownCommandException(String message) {

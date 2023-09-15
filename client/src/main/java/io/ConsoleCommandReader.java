@@ -36,7 +36,7 @@ public class ConsoleCommandReader implements CommandReader {
 
         String input = bufferedReader.readLine();
         if (input == null) {
-            writer.write("Введите что-то более осмысленное");
+            writer.write("Enter something more meaningful");
             throw new NullPointerException();
         }
 
@@ -66,7 +66,7 @@ public class ConsoleCommandReader implements CommandReader {
     @Override
     public Person readPerson() {
         Person person = new DefaultPerson();
-        writer.write("Введите данные нового человека ниже: ");
+        writer.write("Enter the new person's details below: ");
         readName(person);
         readCoordinates(person);
         readHeight(person);
@@ -81,7 +81,7 @@ public class ConsoleCommandReader implements CommandReader {
     @Override
     public Country readCountry() {
         Country country = null;
-        writer.write("Выберите страну из списка: ");
+        writer.write("Select a country from the list: ");
         String[] countries = Country.returnCountries();
 
         for (String i : countries) {
@@ -91,11 +91,11 @@ public class ConsoleCommandReader implements CommandReader {
         try {
             String input = bufferedReader.readLine().trim().toLowerCase();
             country = Country.switchCountry(input);
-            if (country == null) throw new InvalidPersonFieldException("Данной страны нет в списке");
+            if (country == null) throw new InvalidPersonFieldException("This country is not in the list");
 
         } catch (IOException | InvalidPersonFieldException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readCountry();
         }
         return country;
@@ -103,12 +103,12 @@ public class ConsoleCommandReader implements CommandReader {
 
     private void readName(Person person) {
         try {
-            writer.write("Введите имя: ");
+            writer.write("Enter a name: ");
             String name = bufferedReader.readLine().trim().toLowerCase();
             person.setName(name);
         } catch (InvalidPersonFieldException | IOException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readName(person);
         }
     }
@@ -116,53 +116,53 @@ public class ConsoleCommandReader implements CommandReader {
     private void readCoordinates(Person person) {
         try {
             Coordinates coordinates = new Coordinates();
-            writer.write("Введите координаты человека: ");
-            writer.write("Координата X:");
+            writer.write("Enter the coordinates of the person: ");
+            writer.write("Coordinate X:");
             Integer x = Integer.valueOf(bufferedReader.readLine().trim());
             coordinates.setX(x);
-            writer.write("Координата Y:");
+            writer.write("Coordinate Y:");
             Integer y = Integer.valueOf(bufferedReader.readLine().trim());
             coordinates.setY(y);
             person.setCoordinates(coordinates);
         } catch(InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readCoordinates(person);
         }
     }
 
     private void readHeight(Person person) {
         try {
-            writer.write("Введите рост человека");
+            writer.write("Enter the height of the person");
             Double height = Double.valueOf(bufferedReader.readLine().trim());
             person.setHeight(height);
         } catch (InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readHeight(person);
         }
     }
 
     private void readWeight(Person person) {
         try {
-            writer.write("Введите Вес человека");
+            writer.write("Enter the person's weight");
             Long weight = Long.valueOf(bufferedReader.readLine().trim());
             person.setWeight(weight);
         } catch (InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readWeight(person);
         }
     }
 
     private void readPassportId(Person person) {
         try {
-            writer.write("Введите паспортные данные человека: ");
+            writer.write("Enter the person's passport details: ");
             String passportId = bufferedReader.readLine().trim();
             person.setPassportID(passportId);
         } catch (InvalidPersonFieldException | IOException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readPassportId(person);
         }
     }
@@ -170,19 +170,19 @@ public class ConsoleCommandReader implements CommandReader {
     private void readNationality(Person person) {
         try {
             Country p;
-            writer.write("Выберите страну рождения человека из предложенных вариантов: ");
+            writer.write("Choose a person's country of birth from the suggested options: ");
             for (String i : Country.returnCountries()) {
                 writer.write(i);
             }
             String input = bufferedReader.readLine().trim().toLowerCase();
             Country country = Country.switchCountry(input);
             if (country == null) {
-                throw new InvalidPersonFieldException("Данной страны нет в списке");
+                throw new InvalidPersonFieldException("This country is not in the list");
             }
             person.setNationality(country);
         } catch (InvalidPersonFieldException | IOException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readNationality(person);
         }
     }
@@ -190,20 +190,20 @@ public class ConsoleCommandReader implements CommandReader {
     private void readLocation(Person person) {
         try {
             Location location = new Location();
-            writer.write("Введите координаты и имя населенного пункта: ");
-            writer.write("Координата X: ");
+            writer.write("Enter the coordinates and the name of the locality: ");
+            writer.write("Coordinate X: ");
             Double x = Double.valueOf(bufferedReader.readLine().trim());
             location.setX(x);
-            writer.write("Координата Y: ");
+            writer.write("Coordinate Y: ");
             double y = Double.valueOf(bufferedReader.readLine().trim());
             location.setY(y);
-            writer.write("Введите название населенного пункта: ");
+            writer.write("Enter the name of the locality: ");
             String name = bufferedReader.readLine().trim();
             location.setName(name);
             person.setLocation(location);
         } catch(InvalidPersonFieldException | IOException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод, попробуйте еще раз: ");
+            writer.write("Incorrect input, try again: ");
             readLocation(person);
         }
     }

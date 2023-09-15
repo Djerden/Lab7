@@ -16,7 +16,7 @@ public class RemoveGreaterByKeyCommand implements SimpleArgCommand{
     @Override
     public void execute() {
         personCollection.remove_greater_key(number);
-        result = "ключи, номера которых превышали заданный, удалены";
+        result = "keys whose numbers exceeded the specified one have been deleted";
     }
 
     @Override

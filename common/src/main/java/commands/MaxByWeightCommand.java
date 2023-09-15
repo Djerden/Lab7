@@ -19,7 +19,7 @@ public class MaxByWeightCommand implements Command{
         try {
         result = personCollection.max_by_weight().toString();
         } catch (NullPointerException e) {
-            result = "Коллекция пуста";
+            result = "The collection is empty";
         }
 
     }

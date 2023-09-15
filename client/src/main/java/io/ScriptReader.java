@@ -83,11 +83,11 @@ public class ScriptReader implements CommandReader {
         try {
             String input = checkEmptyString().toLowerCase();
             country = Country.switchCountry(input);
-            if (country == null) throw new InvalidPersonFieldException("Данной страны нет в списке");
+            if (country == null) throw new InvalidPersonFieldException("This country is not in the list");
 
         } catch (InvalidPersonFieldException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод страны");
+            writer.write("Incorrect country entry");
         }
         return country;
     }
@@ -108,7 +108,7 @@ public class ScriptReader implements CommandReader {
             person.setLocation(location);
         } catch(InvalidPersonFieldException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод местоположения ");
+            writer.write("Incorrect location input");
         }
     }
 
@@ -118,12 +118,12 @@ public class ScriptReader implements CommandReader {
             String input = checkEmptyString().toLowerCase();
             Country country = Country.switchCountry(input);
             if (country == null) {
-                throw new InvalidPersonFieldException("Данной страны нет в списке");
+                throw new InvalidPersonFieldException("This country is not in the list");
             }
             person.setNationality(country);
         } catch (InvalidPersonFieldException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод национальности ");
+            writer.write("Incorrect entry of nationality ");
         }
     }
 
@@ -133,7 +133,7 @@ public class ScriptReader implements CommandReader {
             person.setPassportID(passportId);
         } catch (InvalidPersonFieldException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод данных паспорта ");
+            writer.write("Incorrect passport data entry ");
         }
     }
 
@@ -143,7 +143,7 @@ public class ScriptReader implements CommandReader {
             person.setWeight(weight);
         } catch (InvalidPersonFieldException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод веса ");
+            writer.write("Incorrect weight input ");
         }
     }
 
@@ -153,7 +153,7 @@ public class ScriptReader implements CommandReader {
             person.setHeight(height);
         } catch (InvalidPersonFieldException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод роста ");
+            writer.write("Incorrect growth input ");
         }
     }
 
@@ -167,7 +167,7 @@ public class ScriptReader implements CommandReader {
             person.setCoordinates(coordinates);
         } catch(InvalidPersonFieldException | NumberFormatException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод координат ");
+            writer.write("Incorrect input of coordinates ");
         }
     }
 
@@ -177,7 +177,7 @@ public class ScriptReader implements CommandReader {
             person.setName(name);
         } catch (InvalidPersonFieldException e) {
             writer.write(e.getMessage());
-            writer.write("Некорректный ввод имени ");
+            writer.write("Incorrect name input ");
         }
     }
 

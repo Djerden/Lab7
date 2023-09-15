@@ -22,7 +22,7 @@ public class ExitCommand implements Command {
         try {
             application.exit();
         } catch (IOException e) {
-            System.out.println("что-то пошло не так с выходом");
+            System.out.println("something went wrong with the exit");
         }
     }
 

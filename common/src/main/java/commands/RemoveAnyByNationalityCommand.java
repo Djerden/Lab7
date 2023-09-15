@@ -21,9 +21,9 @@ public class RemoveAnyByNationalityCommand implements ObjectArgCommand {
 
         Person person = personCollection.remove_any_by_nationality(country);
         if (person == null) {
-            result = "Элементов с выбранной страной нет в коллекции";
+            result = "There are no items with the selected country in the collection";
         } else {
-            result = "Удален объект: name = " + person.getName() + ", id = " + person.getId();
+            result = "Object deleted: name = " + person.getName() + ", id = " + person.getId();
         }
     }
 

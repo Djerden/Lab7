@@ -36,7 +36,7 @@ public class ScriptCommand implements SimpleArgCommand {
     public void execute() {
         File file = new File(fileName);
         if (file.length() == 0) {
-            throw new RuntimeException("Файл пуст");
+            throw new RuntimeException("The file is empty");
         }
 
         try {
@@ -48,14 +48,12 @@ public class ScriptCommand implements SimpleArgCommand {
                     Command command = commandReader.readCommands();
                     commandList.add(command);
                 } catch (UnknownCommandException e) {
-                    writer.write("Нечитаемая команда");
+                    writer.write("Unreadable command");
                 } catch (NullPointerException e) {
-                    writer.write("Ошибка ввода");
+                    writer.write("Input error");
                 } catch (AbsenceArgumentException e) {
-                    writer.write("Одна из команд предполагает наличие аргумента");
+                    writer.write("One of the commands assumes the presence of an argument");
                 }
-
-
             }
         } catch (IOException e) {
 

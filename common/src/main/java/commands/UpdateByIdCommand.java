@@ -20,7 +20,7 @@ public class UpdateByIdCommand implements ObjectArgCommand {
     @Override
     public void execute() {
         personCollection.update(id, person);
-        result = "Объект с id = " + id + " был заменен";
+        result = "Object with id = " + id + " has been replaced";
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UpdateByIdCommand implements ObjectArgCommand {
         if (str != null) {
             id = Integer.valueOf(str);
         } else {
-            throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - id");
+            throw new AbsenceArgumentException("An argument must be passed for this command - id");
         }
     }
 

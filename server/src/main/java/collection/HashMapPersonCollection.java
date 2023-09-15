@@ -13,17 +13,17 @@ import java.util.stream.Collectors;
  */
 public class HashMapPersonCollection implements PersonCollection {
 
-    private Map<String, Person> personCollection; // В качестве ключа я буду указывать номер телефона
+    private Map<String, Person> personCollection;
     private ZonedDateTime creationDate;
-    private PersonReader personReader;
-    private PersonWriter personWriter;
+//    private PersonReader personReader;
+//    private PersonWriter personWriter;
 
 
-    public HashMapPersonCollection(PersonReader personReader, PersonWriter personWriter) {
+    public HashMapPersonCollection() { //PersonReader personReader, PersonWriter personWriter
         personCollection = new HashMap<>();
         creationDate = ZonedDateTime.now();
-        this.personReader = personReader;
-        this.personWriter = personWriter;
+//        this.personReader = personReader;
+//        this.personWriter = personWriter;
     }
 
     @Override
@@ -68,15 +68,15 @@ public class HashMapPersonCollection implements PersonCollection {
         personCollection.clear();
     }
 
-    @Override
-    public void save() {
-        personWriter.writePersons(personCollection);
-    }
+//    @Override
+//    public void save() {
+//        personWriter.writePersons(personCollection);
+//    }
 
-    @Override
-    public void loadData() {
-            personCollection = personReader.readPersons();
-    }
+//    @Override
+//    public void loadData() {
+//            personCollection = personReader.readPersons();
+//    }
 
 
     @Override
@@ -88,7 +88,7 @@ public class HashMapPersonCollection implements PersonCollection {
             }
         }
     }
-    // обработка map с помощью стримов: https://java-blog.ru/collections/map-v-java-s-primerami
+
 
     @Override
     public void remove_greater_key(String key) {
@@ -119,7 +119,7 @@ public class HashMapPersonCollection implements PersonCollection {
     }
 
     @Override
-    public Person max_by_weight() { // сделать со стримами
+    public Person max_by_weight() {
         /*
         String maxKey = "";
         Long maxWeight = 0L;
@@ -141,7 +141,7 @@ public class HashMapPersonCollection implements PersonCollection {
     }
 
     @Override
-    public List<Person> filter_less_than_passport_id(String passportId) { // сделать со стримами
+    public List<Person> filter_less_than_passport_id(String passportId) {
         /*
         List<Person> tempList = new ArrayList<>();
         for (Person p : personCollection.values()) {

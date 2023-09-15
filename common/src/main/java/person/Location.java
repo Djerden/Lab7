@@ -28,7 +28,7 @@ public class Location implements Serializable {
     }
 
     public void setX(Double x) {
-        if (x == null) throw new InvalidPersonFieldException("Координата x не может быть null");
+        if (x == null) throw new InvalidPersonFieldException("The x coordinate cannot be null");
         this.x = x;
     }
 
@@ -45,7 +45,7 @@ public class Location implements Serializable {
     }
 
     public void setName(String name) {
-        if (name == null || name.length() > 842) throw new InvalidPersonFieldException("Поле name не может быть null, а его длина больше 842");
+        if (name == null || name.length() > 842) throw new InvalidPersonFieldException("The name field cannot be null, and its length is greater than 842");
         this.name = name;
     }
 

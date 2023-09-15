@@ -25,7 +25,7 @@ public class Coordinates implements Serializable {
     }
 
     public void setX(Integer x) {
-        if (x == null || x <= -199) throw new InvalidPersonFieldException("Координата X не может быть null или быть меньше -199");
+        if (x == null || x <= -199) throw new InvalidPersonFieldException("The X coordinate cannot be null or be less than -199");
         this.x = x;
     }
 
@@ -34,7 +34,7 @@ public class Coordinates implements Serializable {
     }
 
     public void setY(Integer y) {
-        if (y == null) throw new InvalidPersonFieldException("Координата Y не может быть null");
+        if (y == null) throw new InvalidPersonFieldException("The Y coordinate cannot be null");
         this.y = y;
     }
 

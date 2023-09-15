@@ -8,21 +8,21 @@ import io.Writer;
  * Help command
  */
 public class HelpCommand implements Command {
-    private String helpInformation = "    help : вывести справку по доступным командам\n" +
-            "    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
-            "    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
-            "    insert {number} : добавить нового человека с заданным номером\n" +
-            "    update {id} : обновить значение элемента коллекции, id которого равен заданному\n" +
-            "    remove_key {number} : удалить человека из коллекции по его номеру\n" +
-            "    clear : очистить коллекцию\n" +
-            "    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.\n" +
-            "    exit : завершить программу (без сохранения в файл)\n" +
-            "    remove_greater : удалить из коллекции все элементы, превышающие заданный\n" +
-            "    history : вывести последние 9 команд\n" +
-            "    remove_greater_key {number} : удалить из коллекции все элементы, ключ которых превышает заданный\n" +
-            "    remove_any_by_nationality : удалить из коллекции один элемент, значение поля nationality которого эквивалентно заданному\n" +
-            "    max_by_weight : вывести любой объект из коллекции, значение поля weight которого является максимальным\n" +
-            "    filter_less_than_passport_id {passportId}: вывести элементы, значение поля passportID которых меньше заданного";
+    private String helpInformation = "    help : output help for available commands\n" +
+            "    info : output information about the collection (type, initialization date, number of items, etc.) to the standard output stream.\n" +
+            "    show : output to the standard output stream all the elements of the collection in a string representation\n" +
+            "    insert {number} : add a new person with a given number\n" +
+            "    update {id} : update the value of a collection item whose id is equal to the specified one\n" +
+            "    remove_key {number} : remove a person from the collection by his number\n" +
+            "    clear : clear the collection\n" +
+            "    execute_script file_name : read and execute the script from the specified file. The script contains commands in the same form in which they are entered by the user in interactive mode\n" +
+            "    exit : end the program\n" +
+            "    remove_greater : remove all items from the collection that exceed the specified\n" +
+            "    history : output the last 9 commands\n" +
+            "    remove_greater_key {number} : remove from the collection all items whose key exceeds the specified one\n" +
+            "    remove_any_by_nationality : delete one element from the collection whose value of the nationality field is equivalent to the specified one\n" +
+            "    max_by_weight : output any object from the collection whose weight field value is the maximum\n" +
+            "    filter_less_than_passport_id {passportId}: output elements whose passport ID field value is less than the specified one";
 
     private Writer writer;
 

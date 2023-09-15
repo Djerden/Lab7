@@ -22,7 +22,7 @@ public class InsertCommand implements ObjectArgCommand {
     @Override
     public void execute() {
         personCollection.insert(number, person);
-        result = "Человек добавлен";
+        result = "Person added";
     }
 
     @Override
@@ -45,7 +45,7 @@ public class InsertCommand implements ObjectArgCommand {
         if (str != null) {
             number = str;
         } else {
-            throw new AbsenceArgumentException("Для этой команды необходимо передать аргумент - номер");
+            throw new AbsenceArgumentException("For this command, you need to pass an argument - number");
         }
     }
 

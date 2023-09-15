@@ -56,7 +56,7 @@ public class Client implements Application, HistoryFunction {
 
         commandFactory = new CommandSimpleFactory(this, writer, this);
         commandReader = new ConsoleCommandReader(commandFactory, writer);
-        // список для команды history
+        // list to history
         listOfLastCommands = new LinkedList<>();
     }
 
@@ -67,18 +67,18 @@ public class Client implements Application, HistoryFunction {
         while (!isLogin) {     Починить, когда реализую авторизацию
 
         }*/
-        writer.write("Для справки воспользуйтесь командой \"help\"");
+        writer.write("For reference, use the command \"help\"");
         while(isRunning) {
             try {
                 findAndExecuteCommand();
             } catch (IOException e) {
-                writer.write("Что-то с вводом/выводом...");
+                writer.write("Something with input/output...");
             } catch (UnknownCommandException e) {
-                writer.write("Попробуйте еще раз");
+                writer.write("Try again");
             } catch (NullPointerException e) {
-                writer.write("Ошибка ввода");
+                writer.write("Input error");
             } catch (AbsenceArgumentException e) {
-                writer.write("Эта команда предполагает наличие аргумента");
+                writer.write("This command assumes the presence of an argument");
             }
         }
     }
@@ -108,7 +108,7 @@ public class Client implements Application, HistoryFunction {
 
 
     private void sendCommandToServer(Command command) {
-        // реализация
+        // realisation
         try {
             SocketChannel socketChannel = connectionManager.openConnection(String.valueOf(address), port);
             requestSender.initOutputStream(socketChannel);
@@ -117,9 +117,9 @@ public class Client implements Application, HistoryFunction {
             writer.write(response.getMessage());
             socketChannel.close();
         } catch (IOException e) {
-            writer.write("Проблема с подключением");
+            writer.write("Connection problem");
         } catch (ClassNotFoundException e) {
-            System.out.println("Ошибка с классом");
+            System.out.println("Error with the class");
         }
     }
     @Override
