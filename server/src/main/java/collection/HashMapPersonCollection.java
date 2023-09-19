@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 public class HashMapPersonCollection implements PersonCollection {
 
     private Map<String, Person> personCollection;
+
+    private Map<String, String> usersCollection; // login : password
     private ZonedDateTime creationDate;
 //    private PersonReader personReader;
 //    private PersonWriter personWriter;
@@ -21,9 +23,32 @@ public class HashMapPersonCollection implements PersonCollection {
 
     public HashMapPersonCollection() { //PersonReader personReader, PersonWriter personWriter
         personCollection = new HashMap<>();
+        usersCollection = new HashMap<>();
         creationDate = ZonedDateTime.now();
 //        this.personReader = personReader;
 //        this.personWriter = personWriter;
+    }
+
+    public String addNewUser(String login, String password) {
+        if (usersCollection.containsKey(login)) {
+            return "User with this login already exists";
+        } else {
+            usersCollection.put(login, password);
+            return "success";
+        }
+    }
+
+    public String checkUser(String login, String password) {
+
+        if (usersCollection.containsKey(login)) {
+            if (usersCollection.get(login).equals(password)) {
+                return "success";
+            } else {
+                return "password is not correct";
+            }
+        } else {
+            return "user not found";
+        }
     }
 
     @Override

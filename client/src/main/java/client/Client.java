@@ -7,6 +7,7 @@ import client_commands.HelpCommand;
 import client_commands.HistoryCommand;
 import client_commands.ScriptCommand;
 import commands.Command;
+import commands.UserCommand;
 import exceptions.AbsenceArgumentException;
 import exceptions.UnknownCommandException;
 import command_reader.CommandReader;
@@ -44,8 +45,8 @@ public class Client implements Application, HistoryFunction {
     private ResponseReader responseReader = new ResponseReaderImpl();
 
     // authorizaion
-/*    private boolean isLogin;
-    private Auth auth;*/
+    private boolean isLogin;
+    private Auth auth;
 
 
     public Client(String address, int port) {
@@ -63,10 +64,15 @@ public class Client implements Application, HistoryFunction {
     @Override
     public void start() {
         isRunning = true;
-        /*isLogin = false;
-        while (!isLogin) {     Починить, когда реализую авторизацию
-
-        }*/
+        isLogin = false;
+        while (!isLogin) {
+            try {
+                System.out.println("You need login. Enter command \"login\"");
+                login();
+            } catch (IOException | NullPointerException e) {
+                System.out.println("Problems with auth");
+            }
+        }
         writer.write("For reference, use the command \"help\"");
         while(isRunning) {
             try {
@@ -85,6 +91,7 @@ public class Client implements Application, HistoryFunction {
 
     private void findAndExecuteCommand() throws IOException {
         command = commandReader.readCommands();
+        command.setAuth(auth);
         addCommandToHistory(command);
         if (command instanceof HelpCommand || command instanceof ExitCommand || command instanceof HistoryCommand) {
             command.execute();
@@ -101,8 +108,34 @@ public class Client implements Application, HistoryFunction {
         }
     }
 
-    private void logIn() {
+    private void login() throws IOException {
+        command = commandReader.readCommands();
+        if (command instanceof UserCommand) {
+            Response response = authorized();
+            assert response != null;
+            if (response.getMessage().equals("success")) {
+                isLogin = true;
+                auth = new Auth(((UserCommand) command).getLogin(), ((UserCommand) command).getPassword());
+            }
+            writer.write(response.getMessage());
+        } else {
+            System.out.println("You are not authorized");
+        }
+    }
 
+    private Response authorized() {
+        try {
+            SocketChannel socketChannel = connectionManager.openConnection(address, port);
+            Auth auth = new Auth("auth request", "request");
+            requestSender.initOutputStream(socketChannel);
+            requestSender.sendRequest(command, socketChannel);
+            Response response = responseReader.getResponse(socketChannel);
+            socketChannel.close();
+            return response;
+        } catch (IOException | ClassNotFoundException ioe) {
+            System.out.println("System error with auth");
+            return null;
+        }
     }
 
 

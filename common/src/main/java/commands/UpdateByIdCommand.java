@@ -4,6 +4,7 @@ import collection.PersonCollection;
 import command_reader.CommandReader;
 import exceptions.AbsenceArgumentException;
 import person.Person;
+import user.Auth;
 
 /**
  * A command that replaces another object by id
@@ -13,12 +14,21 @@ public class UpdateByIdCommand implements ObjectArgCommand {
     private PersonCollection personCollection;
     private Integer id;
     private Person person;
+    private Auth auth = null;
 
     public UpdateByIdCommand() {
     }
 
     @Override
+    public void setAuth(Auth auth) {
+        this.auth = auth;
+    }
+
+    @Override
     public void execute() {
+        if (auth != null) {
+            person.setLogin(auth.getLogin());
+        }
         personCollection.update(id, person);
         result = "Object with id = " + id + " has been replaced";
     }

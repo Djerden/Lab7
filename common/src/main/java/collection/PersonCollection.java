@@ -26,4 +26,7 @@ public interface PersonCollection {
 
     boolean isEmpty();
 
+    String addNewUser(String login, String password);
+
+    String checkUser(String login, String password);
 }

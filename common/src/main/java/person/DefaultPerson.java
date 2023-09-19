@@ -47,7 +47,7 @@ public class DefaultPerson extends AbstractPerson {
         setAutomaticallyId();
     }
 
-    private void setAutomaticallyId() {
+    private void setAutomaticallyId() { // удалить как только реализую БД
         if (removedIds.isEmpty()) {
             super.setId(nextId);
             nextId++;

@@ -5,6 +5,7 @@ import command_reader.CommandReader;
 import commands.Command;
 import commands.ObjectArgCommand;
 import commands.SimpleArgCommand;
+import data.User;
 import exceptions.InvalidPersonFieldException;
 import exceptions.UnknownCommandException;
 import person.*;
@@ -91,6 +92,12 @@ public class ScriptReader implements CommandReader {
         }
         return country;
     }
+
+    @Override
+    public User readUser() {
+        return null;
+    }
+
     private void setCreationDate(Person person) {
         ZoneId zoneId = ZoneId.of(Country.selectZoneId(person.getNationality()));
         person.setCreationDate(ZonedDateTime.now(zoneId));

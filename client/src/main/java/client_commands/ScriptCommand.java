@@ -9,6 +9,7 @@ import exceptions.UnknownCommandException;
 import command_reader.CommandReader;
 import io.ScriptReader;
 import io.Writer;
+import user.Auth;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,11 @@ public class ScriptCommand implements SimpleArgCommand {
     public ScriptCommand(CommandFactory factory, Writer writer) {
         this.factory = factory;
         this.writer = writer;
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+
     }
 
     @Override

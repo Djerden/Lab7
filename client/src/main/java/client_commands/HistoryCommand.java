@@ -5,6 +5,7 @@ import client.HistoryFunction;
 import collection.PersonCollection;
 import commands.Command;
 import io.Writer;
+import user.Auth;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -23,6 +24,12 @@ public class HistoryCommand implements Command {
         this.application = application;
         this.writer = writer;
     }
+
+    @Override
+    public void setAuth(Auth auth) {
+
+    }
+
     @Override
     public void execute() {
         commands = application.getHistory();

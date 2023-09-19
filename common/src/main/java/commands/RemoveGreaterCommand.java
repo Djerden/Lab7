@@ -3,6 +3,7 @@ package commands;
 import collection.PersonCollection;
 import command_reader.CommandReader;
 import person.Person;
+import user.Auth;
 
 /**
  * A command that allows you to delete objects whose values have more parameters than the specified object
@@ -11,8 +12,14 @@ public class RemoveGreaterCommand implements ObjectArgCommand {
     private String result = null;
     private PersonCollection personCollection;
     private Person person;
+    private Auth auth;
 
     public RemoveGreaterCommand() {
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+        this.auth = auth;
     }
 
     @Override

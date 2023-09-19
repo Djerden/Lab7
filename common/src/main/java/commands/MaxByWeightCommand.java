@@ -1,6 +1,7 @@
 package commands;
 
 import collection.PersonCollection;
+import user.Auth;
 
 
 /**
@@ -11,6 +12,11 @@ public class MaxByWeightCommand implements Command{
     private PersonCollection personCollection;
 
     public MaxByWeightCommand() {
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+
     }
 
     @Override

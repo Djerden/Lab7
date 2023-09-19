@@ -4,6 +4,8 @@ import collection.PersonCollection;
 import command_reader.CommandReader;
 import exceptions.AbsenceArgumentException;
 import person.Person;
+import user.Auth;
+
 /**
  * Command to add objects of the Person type to the collection
  */
@@ -13,6 +15,8 @@ public class InsertCommand implements ObjectArgCommand {
     private String number;
     private Person person;
 
+    private Auth auth = null;
+
     private String result = null;
 
 
@@ -20,7 +24,15 @@ public class InsertCommand implements ObjectArgCommand {
     }
 
     @Override
+    public void setAuth(Auth auth) {
+        this.auth = auth;
+    }
+
+    @Override
     public void execute() {
+        if (auth != null) {
+            person.setLogin(auth.getLogin());
+        }
         personCollection.insert(number, person);
         result = "Person added";
     }

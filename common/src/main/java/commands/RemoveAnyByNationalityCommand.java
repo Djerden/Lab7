@@ -4,6 +4,7 @@ import collection.PersonCollection;
 import command_reader.CommandReader;
 import person.Country;
 import person.Person;
+import user.Auth;
 
 /**
  * A command that allows you to delete an object from a collection with a given country
@@ -12,8 +13,14 @@ public class RemoveAnyByNationalityCommand implements ObjectArgCommand {
     private String result = "";
     private PersonCollection personCollection;
     private Country country;
+    private Auth auth;
 
     public RemoveAnyByNationalityCommand() {
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+        this.auth = auth;
     }
 
     @Override

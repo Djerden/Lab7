@@ -19,6 +19,16 @@ public abstract class AbstractPerson implements Person, Serializable {
     private Country nationality; //Поле не может быть null
     private Location location; //Поле может быть null
 
+    private String login;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public int getId() {
         return id;
     }
@@ -110,6 +120,7 @@ public abstract class AbstractPerson implements Person, Serializable {
                 "passportID: " + passportID + "\n" +
                 "nationality: " + nationality + "\n" +
                 "location: " + location + "\n" +
+                "user login: " + login + "\n" +
                 "---------------" + "\n";
     }
 }

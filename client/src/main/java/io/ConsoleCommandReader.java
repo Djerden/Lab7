@@ -5,6 +5,8 @@ import command_reader.CommandReader;
 import commands.Command;
 import commands.ObjectArgCommand;
 import commands.SimpleArgCommand;
+import commands.UserCommand;
+import data.User;
 import exceptions.InvalidPersonFieldException;
 import exceptions.UnknownCommandException;
 import person.*;
@@ -59,10 +61,56 @@ public class ConsoleCommandReader implements CommandReader {
             ((ObjectArgCommand)command).setNeededObjects(this);
         }
 
-
         return command;
     }
 
+    public User readUser() {
+        User user = new User();
+        isNewUser(user);
+        readLogin(user);
+        readPassword(user);
+
+        return user;
+    }
+
+    private void isNewUser(User user) {
+        try {
+            writer.write("Do you want to register? yes/no");
+            String login = bufferedReader.readLine().trim().toLowerCase();
+            if (login.equals("yes")) {
+                user.setNewUser(true);
+            } else {
+                user.setNewUser(false);
+            }
+        } catch (InvalidPersonFieldException | IOException e) {
+            writer.write(e.getMessage());
+            writer.write("Incorrect input, try again: ");
+            readLogin(user);
+        }
+    }
+    private void readLogin(User user) {
+        try {
+            writer.write("Enter a login: ");
+            String login = bufferedReader.readLine().trim().toLowerCase();
+            user.setLogin(login);
+        } catch (InvalidPersonFieldException | IOException e) {
+            writer.write(e.getMessage());
+            writer.write("Incorrect input, try again: ");
+            readLogin(user);
+        }
+    }
+
+    private void readPassword(User user) {
+        try {
+            writer.write("Enter a password: ");
+            String password = bufferedReader.readLine();
+            user.setPassword(password);
+        } catch (InvalidPersonFieldException | IOException e) {
+            writer.write(e.getMessage());
+            writer.write("Incorrect input, try again: ");
+            readPassword(user);
+        }
+    }
     @Override
     public Person readPerson() {
         Person person = new DefaultPerson();

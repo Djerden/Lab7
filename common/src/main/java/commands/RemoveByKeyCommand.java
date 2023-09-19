@@ -2,6 +2,7 @@ package commands;
 
 import collection.PersonCollection;
 import exceptions.AbsenceArgumentException;
+import user.Auth;
 
 
 /**
@@ -11,8 +12,14 @@ public class RemoveByKeyCommand implements SimpleArgCommand {
     private String result = null;
     private PersonCollection personCollection;
     private String number;
+    private Auth auth;
 
     public RemoveByKeyCommand() {
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+        this.auth = auth;
     }
 
     @Override

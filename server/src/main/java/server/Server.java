@@ -27,7 +27,7 @@ public class Server implements Application {
     private final ResponseSender responseSender = new ResponseSenderImpl();
     private final ServerConnectionManager serverConnectionManager = new ServerConnectionManagerImpl();
 
-    private final PersonCollection personCollection = new HashMapPersonCollection(); //new JsonPersonReader(dataFileName), new JsonPersonWriter(dataFileName)
+    private final PersonCollection personCollection = new HashMapPersonCollection();
 
     private ServerCommandSimpleFactory factory = new ServerCommandSimpleFactory(this, personCollection);
 

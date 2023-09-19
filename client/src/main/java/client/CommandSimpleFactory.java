@@ -31,24 +31,25 @@ public class CommandSimpleFactory implements CommandFactory {
     }
     private void setCommands() {
 
-        // доступные команды
-        // можно изменить текст на command.toString();
-        commands.put("exit", new ExitCommand(application)); // клиентская команда
-        commands.put("help", new HelpCommand(writer)); // клиентская команда
-        commands.put("history", new HistoryCommand(history, writer)); // клиентская команда
-        commands.put("execute_script", new ScriptCommand(this, writer)); // клиентская команда
 
-        commands.put("info", new InfoCommand()); // серверная команда
-        commands.put("show", new ShowCommand()); // серверная команда
-        commands.put("insert", new InsertCommand()); // серверная команда
-        commands.put("update", new UpdateByIdCommand()); // серверная команда
-        commands.put("remove_key", new RemoveByKeyCommand()); // серверная команда
-        commands.put("clear", new ClearCommand()); // серверная команда
-        commands.put("remove_greater", new RemoveGreaterCommand()); // серверная команда
-        commands.put("remove_greater_key", new RemoveGreaterByKeyCommand()); // серверная команда
-        commands.put("max_by_weight", new MaxByWeightCommand()); // серверная команда
-        commands.put("filter_less_than_passport_id", new FilterLessThanPassportIdCommand()); // серверная команда
-        commands.put("remove_any_by_nationality", new RemoveAnyByNationalityCommand()); // серверная команда
+        commands.put("exit", new ExitCommand(application));
+        commands.put("login", new UserCommand());
+        commands.put("help", new HelpCommand(writer));
+        commands.put("history", new HistoryCommand(history, writer));
+        commands.put("execute_script", new ScriptCommand(this, writer));
+
+        commands.put("info", new InfoCommand());
+        commands.put("show", new ShowCommand());
+        commands.put("insert", new InsertCommand());
+        commands.put("update", new UpdateByIdCommand());
+        commands.put("remove_key", new RemoveByKeyCommand());
+        commands.put("clear", new ClearCommand());
+        commands.put("remove_greater", new RemoveGreaterCommand());
+        commands.put("remove_greater_key", new RemoveGreaterByKeyCommand());
+        commands.put("max_by_weight", new MaxByWeightCommand());
+        commands.put("filter_less_than_passport_id", new FilterLessThanPassportIdCommand());
+        commands.put("remove_any_by_nationality", new RemoveAnyByNationalityCommand());
+
     }
 
     @Override

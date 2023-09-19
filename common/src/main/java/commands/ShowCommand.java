@@ -2,6 +2,7 @@ package commands;
 
 import collection.PersonCollection;
 import person.Person;
+import user.Auth;
 
 import java.util.List;
 
@@ -13,6 +14,11 @@ public class ShowCommand implements Command {
     private PersonCollection personCollection;
 
     public ShowCommand() {
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+
     }
 
     @Override

@@ -3,12 +3,14 @@ package client_commands;
 import collection.PersonCollection;
 import commands.Command;
 import io.Writer;
+import user.Auth;
 
 /**
  * Help command
  */
 public class HelpCommand implements Command {
     private String helpInformation = "    help : output help for available commands\n" +
+            "    login : login or create new user\n" +
             "    info : output information about the collection (type, initialization date, number of items, etc.) to the standard output stream.\n" +
             "    show : output to the standard output stream all the elements of the collection in a string representation\n" +
             "    insert {number} : add a new person with a given number\n" +
@@ -28,6 +30,11 @@ public class HelpCommand implements Command {
 
     public HelpCommand(Writer writer) {
         this.writer = writer;
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+
     }
 
     @Override

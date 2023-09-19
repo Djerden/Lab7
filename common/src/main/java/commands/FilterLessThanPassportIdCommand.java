@@ -3,6 +3,7 @@ package commands;
 import collection.PersonCollection;
 import exceptions.AbsenceArgumentException;
 import person.Person;
+import user.Auth;
 
 import java.util.List;
 /**
@@ -15,6 +16,11 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
 
 
     public FilterLessThanPassportIdCommand() {
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+
     }
 
     @Override

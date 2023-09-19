@@ -3,6 +3,7 @@ package client_commands;
 import application.Application;
 import collection.PersonCollection;
 import commands.Command;
+import user.Auth;
 
 import java.io.IOException;
 
@@ -14,6 +15,11 @@ public class ExitCommand implements Command {
 
     public ExitCommand(Application application) {
         this.application = application;
+    }
+
+    @Override
+    public void setAuth(Auth auth) {
+
     }
 
     @Override
