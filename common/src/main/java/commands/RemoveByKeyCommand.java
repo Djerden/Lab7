@@ -24,8 +24,7 @@ public class RemoveByKeyCommand implements SimpleArgCommand {
 
     @Override
     public void execute() {
-        personCollection.remove_key(number);
-        result = "The person with the number " + number + " deleted";
+        result = personCollection.remove_key(number, auth.getLogin());
     }
 
     @Override

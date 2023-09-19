@@ -24,8 +24,7 @@ public class RemoveGreaterCommand implements ObjectArgCommand {
 
     @Override
     public void execute() {
-        personCollection.remove_greater(person);
-        result = "Objects exceeding the specified one have been deleted";
+        result = personCollection.remove_greater(person, auth.getLogin());
     }
 
     @Override

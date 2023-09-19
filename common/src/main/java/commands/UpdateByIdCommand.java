@@ -29,8 +29,7 @@ public class UpdateByIdCommand implements ObjectArgCommand {
         if (auth != null) {
             person.setLogin(auth.getLogin());
         }
-        personCollection.update(id, person);
-        result = "Object with id = " + id + " has been replaced";
+        result = personCollection.update(id, person, auth.getLogin());
     }
 
     @Override

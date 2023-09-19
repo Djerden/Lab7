@@ -26,7 +26,7 @@ public class RemoveAnyByNationalityCommand implements ObjectArgCommand {
     @Override
     public void execute() {
 
-        Person person = personCollection.remove_any_by_nationality(country);
+        Person person = personCollection.remove_any_by_nationality(country, auth.getLogin());
         if (person == null) {
             result = "There are no items with the selected country in the collection";
         } else {

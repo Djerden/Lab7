@@ -22,10 +22,8 @@ public class ClearCommand implements Command {
 
     @Override
     public void execute() {
-        personCollection.clear();
-        if (personCollection.isEmpty()) {
-            result = "The collection has been cleared";
-        }
+        personCollection.clear(auth.getLogin());
+        result = "Your objects have been deleted";
     }
 
     @Override

@@ -22,7 +22,7 @@ public class RemoveGreaterByKeyCommand implements SimpleArgCommand{
 
     @Override
     public void execute() {
-        personCollection.remove_greater_key(number);
+        personCollection.remove_greater_key(number, auth.getLogin());
         result = "keys whose numbers exceeded the specified one have been deleted";
     }
 

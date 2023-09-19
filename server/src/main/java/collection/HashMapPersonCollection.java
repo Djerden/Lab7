@@ -73,24 +73,35 @@ public class HashMapPersonCollection implements PersonCollection {
 
 
     @Override
-    public void update(int id, Person newPerson) {
+    public String update(int id, Person newPerson, String login) {
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
-            if (entry.getValue().getId() == id) {
+            if (entry.getValue().getId() == id && entry.getValue().getLogin().equals(login)) {
                 newPerson.setId(id);
                 personCollection.put(entry.getKey(), newPerson);
-                break;
+                return "Object with " + id + " have been updated";
             }
+        }
+        return "You don't have access to the object being replaced or the id is specified incorrectly";
+    }
+
+    @Override
+    public String remove_key(String key, String login) {
+        if (personCollection.get(key).getLogin().equals(login)) {
+            DefaultPerson.removeId((DefaultPerson) personCollection.remove(key));
+            return "The person with the number " + key + " deleted";
+        } else {
+            return "object wasn't deleted. Make sure that the object belongs to you";
         }
     }
 
     @Override
-    public void remove_key(String key) {
-        DefaultPerson.removeId((DefaultPerson) personCollection.remove(key));
-    }
-
-    @Override
-    public void clear() {
-        personCollection.clear();
+    public void clear(String login) {
+       // personCollection.clear();
+        for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
+            if (entry.getValue().getLogin().equals(login)) {
+                personCollection.remove(entry.getKey());
+            }
+        }
     }
 
 //    @Override
@@ -105,21 +116,22 @@ public class HashMapPersonCollection implements PersonCollection {
 
 
     @Override
-    public void remove_greater(Person person) {
+    public String remove_greater(Person person, String login) {
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
-            if (person.compareTo(entry.getValue()) > 0) {
-                System.out.println(entry.getKey() + " " + entry.getValue().getName() + " - удален");
+            if (person.compareTo(entry.getValue()) > 0 && entry.getValue().getLogin().equals(login)) {
                 DefaultPerson.removeId((DefaultPerson)personCollection.remove(entry.getKey()));
+                return entry.getKey() + " " + entry.getValue().getName() + " - удален";
             }
         }
+        return "Not a single object has been deleted";
     }
 
 
     @Override
-    public void remove_greater_key(String key) {
+    public void remove_greater_key(String key, String login) {
         try {
             for (String mapKey : personCollection.keySet()) {
-                if (Integer.valueOf(mapKey) > Integer.valueOf(key)) {
+                if (Integer.valueOf(mapKey) > Integer.valueOf(key) && personCollection.get(mapKey).getLogin().equals(login)) {
                     DefaultPerson.removeId((DefaultPerson) personCollection.remove(mapKey));
                 }
             }
@@ -129,10 +141,10 @@ public class HashMapPersonCollection implements PersonCollection {
     }
 
     @Override
-    public Person remove_any_by_nationality(Country country) {
+    public Person remove_any_by_nationality(Country country, String login) {
         if (!personCollection.isEmpty()) {
             for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
-                if (entry.getValue().getNationality().equals(country)) {
+                if (entry.getValue().getNationality().equals(country) && entry.getValue().getLogin().equals(login)) {
                     Person person = personCollection.remove(entry.getKey());
                     DefaultPerson.removeId((DefaultPerson) person);
                     return person;
