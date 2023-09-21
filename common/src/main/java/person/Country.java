@@ -53,4 +53,19 @@ public enum Country implements Serializable {
         }
         return p;
     }
+    public String toString() {
+        String p = null;
+        switch (this) {
+            case CHINA:
+                p = "china";
+                break;
+            case SOUTH_KOREA:
+                p = "south_korea";
+                break;
+            case NORTH_KOREA:
+                p = "north_korea";
+                break;
+        }
+        return p;
+    }
 }

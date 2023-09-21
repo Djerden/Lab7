@@ -10,6 +10,9 @@ public interface Person extends Comparable<Person>{
     public String getLogin();
 
     public void setLogin(String login);
+    public String getNumber();
+
+    public void setNumber(String number);
     public int getId();
 
     public void setId(int id);

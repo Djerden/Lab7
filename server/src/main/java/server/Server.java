@@ -4,16 +4,19 @@ import application.Application;
 import collection.HashMapPersonCollection;
 import collection.PersonCollection;
 import commands.Command;
+import data.DBManager;
+import data.DataManager;
 import data.Response;
 import network.*;
 import server_commands.ServerCommand;
 import server_commands.ServerCommandSimpleFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.channels.ClosedSelectorException;
 import java.nio.channels.Selector;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +30,7 @@ public class Server implements Application {
     private final ResponseSender responseSender = new ResponseSenderImpl();
     private final ServerConnectionManager serverConnectionManager = new ServerConnectionManagerImpl();
 
-    private final PersonCollection personCollection = new HashMapPersonCollection();
+    private PersonCollection personCollection;
 
     private ServerCommandSimpleFactory factory = new ServerCommandSimpleFactory(this, personCollection);
 
@@ -39,18 +42,16 @@ public class Server implements Application {
 
     @Override
     public void start() {
-//        if (dataFileName == null) {
-//            throw new IncorrectFileSettings();
-//        }
+//
         consoleStart();
         log.Logback.getLogger().info("server was started");
         isRunning = true;
         Command command;
 
-//        try {
-//            personCollection.loadData();
-//            log.Logback.getLogger().info("data was parsed");
-//        } catch (Exception e) {}
+        try {
+            getDataFromDB();
+            log.Logback.getLogger().info("data was parsed");
+        } catch (Exception e) {}
 
         Selector selector;
         while (isRunning) {
@@ -97,6 +98,17 @@ public class Server implements Application {
                 return;
             }
         }
+
+    }
+
+    private void getDataFromDB() throws FileNotFoundException, ClassNotFoundException, SQLException {
+        Class.forName("org.postgresql.Driver");
+        String url = "jdbc:postgresql:lab7";
+        String user = "postgres";
+        String pass = "1967228";
+        DataManager dataManager = new DBManager(url, user, pass);
+        personCollection = new HashMapPersonCollection(dataManager);
+
 
     }
 

@@ -10,6 +10,7 @@ import java.util.Comparator;
 public abstract class AbstractPerson implements Person, Serializable {
 
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private String number;
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
@@ -27,6 +28,14 @@ public abstract class AbstractPerson implements Person, Serializable {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public int getId() {
@@ -111,6 +120,7 @@ public abstract class AbstractPerson implements Person, Serializable {
     @Override
     public String toString() {
         return "---------------" + "\n" +
+                "number: " + number + "\n" +
                 "name: " + name + "\n" +
                 "id: " + id + "\n" +
                 "coordinates: " + coordinates + "\n" +

@@ -33,6 +33,8 @@ public class InsertCommand implements ObjectArgCommand {
         if (auth != null) {
             person.setLogin(auth.getLogin());
         }
+        //добавить номер в персон
+        person.setNumber(number);
         personCollection.insert(number, person);
         result = "Person added";
     }

@@ -1,5 +1,6 @@
 package collection;
 
+import data.DataManager;
 import person.Country;
 import person.DefaultPerson;
 import person.Person;
@@ -17,16 +18,16 @@ public class HashMapPersonCollection implements PersonCollection {
 
     private Map<String, String> usersCollection; // login : password
     private ZonedDateTime creationDate;
+    private DataManager dataManager;
 //    private PersonReader personReader;
 //    private PersonWriter personWriter;
 
 
-    public HashMapPersonCollection() { //PersonReader personReader, PersonWriter personWriter
-        personCollection = new HashMap<>();
-        usersCollection = new HashMap<>();
+    public HashMapPersonCollection(DataManager dataManager) { //PersonReader personReader, PersonWriter personWriter
         creationDate = ZonedDateTime.now();
-//        this.personReader = personReader;
-//        this.personWriter = personWriter;
+        this.dataManager = dataManager;
+        personCollection = dataManager.readCollection();
+        usersCollection = dataManager.readUsers();
     }
 
     public String addNewUser(String login, String password) {
@@ -34,6 +35,7 @@ public class HashMapPersonCollection implements PersonCollection {
             return "User with this login already exists";
         } else {
             usersCollection.put(login, password);
+            dataManager.addUser(login, password);
             return "success";
         }
     }
@@ -68,7 +70,13 @@ public class HashMapPersonCollection implements PersonCollection {
     @Override
     public void insert(String key, Person person) {
         // Ключ - номер телефона
-        personCollection.put(key, person);
+        try {
+            int id = dataManager.addElement(person);
+            person.setId(id);
+            personCollection.put(key, person);
+        } catch(Exception e) {
+            System.out.println("error with db " + e.getMessage());
+        }
     }
 
 
@@ -77,6 +85,7 @@ public class HashMapPersonCollection implements PersonCollection {
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
             if (entry.getValue().getId() == id && entry.getValue().getLogin().equals(login)) {
                 newPerson.setId(id);
+                dataManager.updateElement(newPerson, id);
                 personCollection.put(entry.getKey(), newPerson);
                 return "Object with " + id + " have been updated";
             }
@@ -86,40 +95,40 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public String remove_key(String key, String login) {
-        if (personCollection.get(key).getLogin().equals(login)) {
-            DefaultPerson.removeId((DefaultPerson) personCollection.remove(key));
-            return "The person with the number " + key + " deleted";
-        } else {
-            return "object wasn't deleted. Make sure that the object belongs to you";
+        try {
+            if (personCollection.get(key).getLogin().equals(login)) {
+                dataManager.removeElement(personCollection.get(key).getId());
+                personCollection.remove(key);
+                return "The person with the number " + key + " deleted";
+            } else {
+                return "object wasn't deleted. Make sure that the object belongs to you";
+            }
+        } catch (NullPointerException e) {
+            return "the number is incorrect";
         }
     }
 
     @Override
     public void clear(String login) {
        // personCollection.clear();
-        for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
-            if (entry.getValue().getLogin().equals(login)) {
-                personCollection.remove(entry.getKey());
+        try {
+            for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
+                if (entry.getValue().getLogin().equals(login)) {
+                    dataManager.removeElement(entry.getValue().getId());
+                    personCollection.remove(entry.getValue().getNumber());
+                }
             }
+        } catch (ConcurrentModificationException e) {
+            clear(login);
         }
     }
-
-//    @Override
-//    public void save() {
-//        personWriter.writePersons(personCollection);
-//    }
-
-//    @Override
-//    public void loadData() {
-//            personCollection = personReader.readPersons();
-//    }
-
 
     @Override
     public String remove_greater(Person person, String login) {
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
             if (person.compareTo(entry.getValue()) > 0 && entry.getValue().getLogin().equals(login)) {
-                DefaultPerson.removeId((DefaultPerson)personCollection.remove(entry.getKey()));
+                dataManager.removeElement(entry.getValue().getId());
+                personCollection.remove(entry.getKey());
                 return entry.getKey() + " " + entry.getValue().getName() + " - удален";
             }
         }
@@ -132,7 +141,8 @@ public class HashMapPersonCollection implements PersonCollection {
         try {
             for (String mapKey : personCollection.keySet()) {
                 if (Integer.valueOf(mapKey) > Integer.valueOf(key) && personCollection.get(mapKey).getLogin().equals(login)) {
-                    DefaultPerson.removeId((DefaultPerson) personCollection.remove(mapKey));
+                    dataManager.removeElement(personCollection.get(mapKey).getId());
+                    personCollection.remove(mapKey);
                 }
             }
         } catch (Exception e) {
@@ -145,6 +155,7 @@ public class HashMapPersonCollection implements PersonCollection {
         if (!personCollection.isEmpty()) {
             for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
                 if (entry.getValue().getNationality().equals(country) && entry.getValue().getLogin().equals(login)) {
+                    dataManager.removeElement(entry.getValue().getId());
                     Person person = personCollection.remove(entry.getKey());
                     DefaultPerson.removeId((DefaultPerson) person);
                     return person;

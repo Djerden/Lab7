@@ -71,6 +71,8 @@ public class Client implements Application, HistoryFunction {
                 login();
             } catch (IOException | NullPointerException e) {
                 System.out.println("Problems with auth");
+            } catch (UnknownCommandException uce) {
+                writer.write("Try again");
             }
         }
         writer.write("For reference, use the command \"help\"");
