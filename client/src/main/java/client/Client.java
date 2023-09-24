@@ -95,7 +95,17 @@ public class Client implements Application, HistoryFunction {
         command = commandReader.readCommands();
         command.setAuth(auth);
         addCommandToHistory(command);
-        if (command instanceof HelpCommand || command instanceof ExitCommand || command instanceof HistoryCommand) {
+
+        if (command instanceof UserCommand) {
+            Response response = authorized();
+            assert response != null;
+            if (response.getMessage().equals("success")) {
+                isLogin = true;
+                auth = new Auth(((UserCommand) command).getLogin(), ((UserCommand) command).getPassword());
+            }
+            writer.write(response.getMessage());
+        }
+        else if (command instanceof HelpCommand || command instanceof ExitCommand || command instanceof HistoryCommand) {
             command.execute();
 
         } else if (command instanceof ScriptCommand) {

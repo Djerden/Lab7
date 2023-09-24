@@ -29,9 +29,11 @@ public class Server implements Application {
     private final CommandReader commandReader = new CommandReaderImpl();
     private final ResponseWriter responseWriter = new ResponseWriterImpl();
     private final ResponseSender responseSender = new ResponseSenderImpl();
-    private final ServerConnectionManager serverConnectionManager = new ServerConnectionManagerImpl();
+    //private final ServerConnectionManager serverConnectionManager = new ServerConnectionManagerImpl();
 
     private PersonCollection personCollection;
+
+    private ServerConnectionManagerImpl2 connectionListener;
 
     private ServerCommandSimpleFactory factory = new ServerCommandSimpleFactory(this, personCollection);
 
@@ -107,7 +109,7 @@ public class Server implements Application {
     }
 
     private void communicateWithClient() {
-        ServerConnectionManagerImpl2 connectionListener = new ServerConnectionManagerImpl2();
+        connectionListener = new ServerConnectionManagerImpl2();
         connectionListener.setSocketAddress(new InetSocketAddress(address, port));
         RequestHandler requestHandler = new RequestHandlerImpl(responseWriter, personCollection);
         log.Logback.getLogger().info("connection is open");
@@ -136,6 +138,7 @@ public class Server implements Application {
         //personCollection.save();
         log.Logback.getLogger().info("collection was saved");
         isRunning = false;
+        connectionListener.stop();
         System.exit(0);
     }
 

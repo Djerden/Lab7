@@ -8,13 +8,14 @@ import java.nio.channels.spi.SelectorProvider;
 
 public class ServerConnectionManagerImpl2 {
     private Selector selector;
+    private ServerSocketChannel serverChannel;
     private InetSocketAddress socketAddress;
 
 
     public Selector openConnection() throws IOException {
         selector = SelectorProvider.provider().openSelector();
 
-        ServerSocketChannel serverChannel = ServerSocketChannel.open();
+        serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
 
         try {
@@ -50,5 +51,10 @@ public class ServerConnectionManagerImpl2 {
 
     public void setSocketAddress(InetSocketAddress socketAddress) {
         this.socketAddress = socketAddress;
+    }
+    public void stop() throws IOException {
+        selector.close();
+        serverChannel.socket().close();
+        serverChannel.close();
     }
 }
