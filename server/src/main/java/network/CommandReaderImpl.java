@@ -15,34 +15,29 @@ import java.util.Set;
 public class CommandReaderImpl implements CommandReader{
 
     private Selector selector;
+    private SelectionKey selectionKey;
     @Override
-    public Command readCommand(Selector selector) throws IOException, ClassNotFoundException {
-        this.selector = selector;
+    public Command readCommand(SelectionKey selectionKey) throws IOException, ClassNotFoundException {
+        this.selectionKey = selectionKey;
         return deserializeCommand(readBytes());
-    }
-
-    byte[] readBytes() throws IOException {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(2048);
-        SocketChannel socketChannel = null;
-        while (socketChannel == null) {
-            selector.select();
-            Set<SelectionKey> keys = selector.selectedKeys();
-            Iterator<SelectionKey> iterator = keys.iterator();
-            while (iterator.hasNext()) {
-                SelectionKey key = iterator.next();
-                if (key.isReadable()) {
-                    socketChannel = (SocketChannel) key.channel();
-                    socketChannel.read(byteBuffer);
-                    socketChannel.register(selector, SelectionKey.OP_WRITE);
-                }
-                iterator.remove();
-            }
-        }
-        return byteBuffer.array();
     }
 
     private Command deserializeCommand(byte[] bytes) throws IOException, ClassNotFoundException {
         ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(bytes));
-        return (Command) objectInputStream.readObject();
+
+        Command command = (Command) objectInputStream.readObject();
+        command.setSocketChannel((SocketChannel) selectionKey.channel());
+        return command;
+    }
+
+    byte[] readBytes() throws IOException {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(2048);
+        if (selectionKey.isReadable()) {
+            SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
+            socketChannel.read(byteBuffer);
+        } else {
+            System.out.println("Данные не прочитаны в классе CommandReader");
+        }
+        return byteBuffer.array();
     }
 }

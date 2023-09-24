@@ -3,6 +3,8 @@ package commands;
 import collection.PersonCollection;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 /**
  * A command that allows you to delete objects whose keys are larger than the specified one
  */
@@ -11,6 +13,7 @@ public class RemoveGreaterByKeyCommand implements SimpleArgCommand{
     private PersonCollection personCollection;
     private String number;
     private Auth auth;
+    private transient SocketChannel socketChannel;
 
     public RemoveGreaterByKeyCommand() {
     }
@@ -34,6 +37,16 @@ public class RemoveGreaterByKeyCommand implements SimpleArgCommand{
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

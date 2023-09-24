@@ -3,6 +3,8 @@ package commands;
 import collection.PersonCollection;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 
 /**
  * The command that outputs the object with the maximum weight
@@ -10,6 +12,8 @@ import user.Auth;
 public class MaxByWeightCommand implements Command{
     private String result = "";
     private PersonCollection personCollection;
+
+    private transient SocketChannel socketChannel;
 
     public MaxByWeightCommand() {
     }
@@ -38,6 +42,16 @@ public class MaxByWeightCommand implements Command{
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

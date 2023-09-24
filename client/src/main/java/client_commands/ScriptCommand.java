@@ -13,6 +13,7 @@ import user.Auth;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -73,6 +74,16 @@ public class ScriptCommand implements SimpleArgCommand {
 
     @Override
     public String getResult() {
+        return null;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
         return null;
     }
 

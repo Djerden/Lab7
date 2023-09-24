@@ -9,6 +9,7 @@ import command_reader.CommandReader;
 import data.User;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
 public class UserCommand implements ObjectArgCommand {
@@ -18,6 +19,7 @@ public class UserCommand implements ObjectArgCommand {
     private boolean isNewUser;
     private String login;
     private String password;
+    private transient SocketChannel socketChannel;
 
 
     @Override
@@ -42,6 +44,16 @@ public class UserCommand implements ObjectArgCommand {
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
 

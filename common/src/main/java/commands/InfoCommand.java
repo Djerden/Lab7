@@ -3,6 +3,8 @@ package commands;
 import collection.PersonCollection;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 
 /**
  * Command that outputs information about the collection
@@ -10,6 +12,8 @@ import user.Auth;
 public class InfoCommand implements Command {
     private String result = null;
     private PersonCollection personCollection;
+
+    private transient SocketChannel socketChannel;
 
     public InfoCommand() {
     }
@@ -32,6 +36,16 @@ public class InfoCommand implements Command {
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

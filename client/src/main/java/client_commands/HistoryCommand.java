@@ -7,6 +7,7 @@ import commands.Command;
 import io.Writer;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Queue;
@@ -47,6 +48,16 @@ public class HistoryCommand implements Command {
 
     @Override
     public String getResult() {
+        return null;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
         return null;
     }
 

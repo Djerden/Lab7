@@ -4,6 +4,8 @@ import collection.PersonCollection;
 import exceptions.AbsenceArgumentException;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 
 /**
  * A command that allows you to delete an object from the collection by key
@@ -13,6 +15,8 @@ public class RemoveByKeyCommand implements SimpleArgCommand {
     private PersonCollection personCollection;
     private String number;
     private Auth auth;
+
+    private transient SocketChannel socketChannel;
 
     public RemoveByKeyCommand() {
     }
@@ -35,6 +39,16 @@ public class RemoveByKeyCommand implements SimpleArgCommand {
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

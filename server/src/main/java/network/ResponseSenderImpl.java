@@ -16,9 +16,8 @@ public class ResponseSenderImpl implements ResponseSender{
 
     private Selector selector;
     @Override
-    public void sendResponse(Response response, Selector selector) throws IOException {
-        this.selector = selector;
-        sendBytes(serializeResponse(response));
+    public void sendResponse(SocketChannel socketChannel, Response response) throws IOException {
+        sendBytes(serializeResponse(response), socketChannel);
 
     }
     private byte[] serializeResponse(Response response) throws IOException {
@@ -27,22 +26,16 @@ public class ResponseSenderImpl implements ResponseSender{
         objectOutputStream.writeObject(response);
         return byteArrayOutputStream.toByteArray();
     }
-    private void sendBytes(byte[] bytes) throws IOException {
+    private void sendBytes(byte[] bytes, SocketChannel socketChannel) throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-        SocketChannel socketChannel = null;
-        while (socketChannel == null) {
-            selector.select();
-            Set<SelectionKey> keys = selector.selectedKeys();
-            Iterator<SelectionKey> iterator = keys.iterator();
-            while (iterator.hasNext()) {
-                SelectionKey key = iterator.next();
-                if (key.isWritable()) {
-                    socketChannel = (SocketChannel) key.channel();
-                    socketChannel.write(byteBuffer);
-                }
+        int numWritten = 1;
+        try {
+            while (byteBuffer.remaining() > 0) {
+                numWritten = socketChannel.write(byteBuffer);
             }
+        } catch (IOException e) {
+            socketChannel.close();
+            e.printStackTrace();
         }
     }
-
-
 }

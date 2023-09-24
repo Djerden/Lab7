@@ -5,6 +5,8 @@ import commands.Command;
 import io.Writer;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 /**
  * Help command
  */
@@ -49,6 +51,16 @@ public class HelpCommand implements Command {
 
     @Override
     public String getResult() {
+        return null;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
         return null;
     }
 

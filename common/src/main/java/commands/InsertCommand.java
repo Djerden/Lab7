@@ -6,6 +6,8 @@ import exceptions.AbsenceArgumentException;
 import person.Person;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 /**
  * Command to add objects of the Person type to the collection
  */
@@ -18,6 +20,8 @@ public class InsertCommand implements ObjectArgCommand {
     private Auth auth = null;
 
     private String result = null;
+
+    private transient SocketChannel socketChannel;
 
 
     public InsertCommand() {
@@ -47,6 +51,16 @@ public class InsertCommand implements ObjectArgCommand {
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

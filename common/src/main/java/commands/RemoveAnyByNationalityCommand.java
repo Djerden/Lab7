@@ -6,6 +6,8 @@ import person.Country;
 import person.Person;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 /**
  * A command that allows you to delete an object from a collection with a given country
  */
@@ -14,6 +16,7 @@ public class RemoveAnyByNationalityCommand implements ObjectArgCommand {
     private PersonCollection personCollection;
     private Country country;
     private Auth auth;
+    private transient SocketChannel socketChannel;
 
     public RemoveAnyByNationalityCommand() {
     }
@@ -42,6 +45,16 @@ public class RemoveAnyByNationalityCommand implements ObjectArgCommand {
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

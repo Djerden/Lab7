@@ -6,6 +6,8 @@ import exceptions.AbsenceArgumentException;
 import person.Person;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
+
 /**
  * A command that replaces another object by id
  */
@@ -15,6 +17,7 @@ public class UpdateByIdCommand implements ObjectArgCommand {
     private Integer id;
     private Person person;
     private Auth auth = null;
+    private transient SocketChannel socketChannel;
 
     public UpdateByIdCommand() {
     }
@@ -40,6 +43,16 @@ public class UpdateByIdCommand implements ObjectArgCommand {
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

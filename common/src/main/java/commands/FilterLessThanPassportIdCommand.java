@@ -5,6 +5,7 @@ import exceptions.AbsenceArgumentException;
 import person.Person;
 import user.Auth;
 
+import java.nio.channels.SocketChannel;
 import java.util.List;
 /**
  * Command that outputs objects of the Person passport Id type that are less than the specified one
@@ -13,6 +14,8 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
     private String result = "";
     private PersonCollection personCollection;
     private String passportId;
+
+    private transient SocketChannel socketChannel;
 
 
     public FilterLessThanPassportIdCommand() {
@@ -44,6 +47,16 @@ public class FilterLessThanPassportIdCommand implements SimpleArgCommand{
     @Override
     public String getResult() {
         return result;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
     @Override

@@ -6,6 +6,7 @@ import commands.Command;
 import user.Auth;
 
 import java.io.IOException;
+import java.nio.channels.SocketChannel;
 
 /**
  * Exit command from the program
@@ -39,6 +40,16 @@ public class ExitCommand implements Command {
 
     @Override
     public String getResult() {
+        return null;
+    }
+
+    @Override
+    public void setSocketChannel(SocketChannel socketChannel) {
+
+    }
+
+    @Override
+    public SocketChannel getSocketChannel() {
         return null;
     }
 

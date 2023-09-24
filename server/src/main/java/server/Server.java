@@ -12,6 +12,7 @@ import server_commands.ServerCommand;
 import server_commands.ServerCommandSimpleFactory;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.nio.channels.ClosedSelectorException;
 import java.nio.channels.Selector;
 import java.sql.Connection;
@@ -42,18 +43,22 @@ public class Server implements Application {
 
     @Override
     public void start() {
-//
+
         consoleStart();
+
         log.Logback.getLogger().info("server was started");
         isRunning = true;
-        Command command;
+
 
         try {
             getDataFromDB();
             log.Logback.getLogger().info("data was parsed");
         } catch (Exception e) {}
 
-        Selector selector;
+        communicateWithClient();
+
+        /*Selector selector;
+
         while (isRunning) {
             try {
                 serverConnectionManager.openConnection(address, port);
@@ -64,10 +69,10 @@ public class Server implements Application {
                     log.Logback.getLogger().error("close selector exception");
                     return;
                 }
-
-                try {
+                //new Thread(doCommand).start();
+                 try {
                     String result;
-                    command = commandReader.readCommand(selector);
+                    Command command = commandReader.readCommand(selector);
                     log.Logback.getLogger().info("command was received");
                     command.setCollection(personCollection);
 
@@ -97,8 +102,23 @@ public class Server implements Application {
                 e.printStackTrace();
                 return;
             }
-        }
+        }*/
 
+    }
+
+    private void communicateWithClient() {
+        ServerConnectionManagerImpl2 connectionListener = new ServerConnectionManagerImpl2();
+        connectionListener.setSocketAddress(new InetSocketAddress(address, port));
+        RequestHandler requestHandler = new RequestHandlerImpl(responseWriter, personCollection);
+        log.Logback.getLogger().info("connection is open");
+        System.out.println("Connection is open");
+        try {
+            ServerExec serverExec = new ServerExec(connectionListener, commandReader, requestHandler, responseSender);
+            new Thread(serverExec).start();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void getDataFromDB() throws FileNotFoundException, ClassNotFoundException, SQLException {
@@ -109,15 +129,14 @@ public class Server implements Application {
         DataManager dataManager = new DBManager(url, user, pass);
         personCollection = new HashMapPersonCollection(dataManager);
 
-
     }
 
     @Override
     public void exit() throws IOException {
         //personCollection.save();
         log.Logback.getLogger().info("collection was saved");
-        serverConnectionManager.stop();
         isRunning = false;
+        System.exit(0);
     }
 
     private void consoleStart() {
