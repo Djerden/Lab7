@@ -49,9 +49,8 @@ public class ServerExec implements Runnable {
                                 SelectionKey key = requestOpsState.getSocketChannel().keyFor(selector);
                                 key.interestOps(requestOpsState.getOps());
                             } catch (Exception e){
-                                log.Logback.getLogger().error("error with selection keys");
-                                log.Logback.getLogger().error(e.getMessage());
-                                e.printStackTrace();
+                                System.out.println("error with selection keys");
+                                System.out.println(e.getMessage());
                             }
                         } else if (requestOpsState.getType() == RequestOpsState.DEREGISTER) {
                             SelectionKey key = requestOpsState.getSocketChannel().keyFor(selector);
@@ -83,7 +82,7 @@ public class ServerExec implements Runnable {
                 }
 
             } catch(Exception e) {
-                e.printStackTrace();
+
             }
         }
     }
@@ -104,7 +103,6 @@ public class ServerExec implements Runnable {
                     responseSender.sendResponse(channel, responseMap.get(selectionKey.channel()));
                 }
             } catch(IOException e) {
-                e.printStackTrace();
                 System.out.println("Ошибка отправки ответа клиенту");
             }
         };

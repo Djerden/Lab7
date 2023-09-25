@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
             String address = "localhost";
-            int port = 8080;
+            int port = 2102;
             Application client = new Client(address, port);
 
         try {

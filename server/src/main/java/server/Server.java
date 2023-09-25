@@ -38,7 +38,7 @@ public class Server implements Application {
     private ServerCommandSimpleFactory factory = new ServerCommandSimpleFactory(this, personCollection);
 
     String address = "localhost";
-    int port = 8080;
+    int port = 2102;
 
     private boolean isRunning;
 
@@ -112,14 +112,13 @@ public class Server implements Application {
         connectionListener = new ServerConnectionManagerImpl2();
         connectionListener.setSocketAddress(new InetSocketAddress(address, port));
         RequestHandler requestHandler = new RequestHandlerImpl(responseWriter, personCollection);
-        log.Logback.getLogger().info("connection is open");
         System.out.println("Connection is open");
         try {
             ServerExec serverExec = new ServerExec(connectionListener, commandReader, requestHandler, responseSender);
             new Thread(serverExec).start();
 
         } catch (Exception e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -130,13 +129,10 @@ public class Server implements Application {
         String pass = "1967228";
         DataManager dataManager = new DBManager(url, user, pass);
         personCollection = new HashMapPersonCollection(dataManager);
-
     }
 
     @Override
     public void exit() throws IOException {
-        //personCollection.save();
-        log.Logback.getLogger().info("collection was saved");
         isRunning = false;
         connectionListener.stop();
         System.exit(0);
@@ -158,7 +154,7 @@ public class Server implements Application {
                     }
                     serverCommand.execute();
                 } catch (IOException e) {
-
+                    System.out.println(e.getMessage());
                 }
             }
         });

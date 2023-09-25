@@ -12,3 +12,5 @@ build/
 *.log
 *.class
 
+META-INF/
+
