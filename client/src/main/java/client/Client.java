@@ -109,10 +109,20 @@ public class Client implements Application, HistoryFunction {
             command.execute();
 
         } else if (command instanceof ScriptCommand) {
-            command.execute();
+            try {
+                command.execute();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
             List<Command> commandList = ((ScriptCommand)command).getCommandList();
-            for (Command i : commandList) {
-                sendCommandToServer(i);
+            for (Command scriptCommand : commandList) {
+
+                if (scriptCommand instanceof HelpCommand || scriptCommand instanceof ExitCommand || scriptCommand instanceof HistoryCommand) {
+                    scriptCommand.execute();
+                } else {
+                    scriptCommand.setAuth(auth);
+                    sendCommandToServer(scriptCommand);
+                }
             }
 
         } else {
@@ -163,6 +173,7 @@ public class Client implements Application, HistoryFunction {
             socketChannel.close();
         } catch (IOException e) {
             writer.write("Connection problem");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             System.out.println("Error with the class");
         }

@@ -39,8 +39,7 @@ public class InsertCommand implements ObjectArgCommand {
         }
         //добавить номер в персон
         person.setNumber(number);
-        personCollection.insert(number, person);
-        result = "Person added";
+        result = personCollection.insert(number, person);
     }
 
     @Override
@@ -52,6 +51,7 @@ public class InsertCommand implements ObjectArgCommand {
     public String getResult() {
         return result;
     }
+
 
     @Override
     public void setSocketChannel(SocketChannel socketChannel) {

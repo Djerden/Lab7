@@ -19,8 +19,6 @@ public class HashMapPersonCollection implements PersonCollection {
     private Map<String, String> usersCollection; // login : password
     private ZonedDateTime creationDate;
     private DataManager dataManager;
-//    private PersonReader personReader;
-//    private PersonWriter personWriter;
 
 
     public HashMapPersonCollection(DataManager dataManager) { //PersonReader personReader, PersonWriter personWriter
@@ -30,11 +28,16 @@ public class HashMapPersonCollection implements PersonCollection {
         usersCollection = dataManager.readUsers();
     }
 
+    private void updateCollection() {
+        personCollection = dataManager.readCollection();
+        usersCollection = dataManager.readUsers();
+    }
     public String addNewUser(String login, String password) {
         if (usersCollection.containsKey(login)) {
             return "User with this login already exists";
         } else {
-            usersCollection.put(login, password);
+            updateCollection();
+            //usersCollection.put(login, password);
             dataManager.addUser(login, password);
             return "success";
         }
@@ -55,6 +58,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public String info() {
+        updateCollection();
         return "Сollection type: Map of persons" +
                 "\nCreation date: " + creationDate +
                 "\nNumber of elements: " + personCollection.size();
@@ -62,26 +66,33 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public List<Person> show() {
+        updateCollection();
         List<Person> tempList = new ArrayList<>();
         personCollection.values().stream().sorted().forEach(tempList::add);
         return tempList;
     }
 
     @Override
-    public void insert(String key, Person person) {
+    public String insert(String key, Person person) {
         // Ключ - номер телефона
+        updateCollection();
         try {
-            int id = dataManager.addElement(person);
-            person.setId(id);
-            personCollection.put(key, person);
+            if (personCollection.containsKey(key)) {
+                return "person already exists";
+            } else {
+                int id = dataManager.addElement(person);
+                person.setId(id);
+                personCollection.put(key, person);
+            }
         } catch(Exception e) {
             System.out.println("error with db " + e.getMessage());
         }
+        return "Person with number: " + key + " was added";
     }
-
 
     @Override
     public String update(int id, Person newPerson, String login) {
+        updateCollection();
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
             if (entry.getValue().getId() == id && entry.getValue().getLogin().equals(login)) {
                 newPerson.setId(id);
@@ -95,6 +106,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public String remove_key(String key, String login) {
+        updateCollection();
         try {
             if (personCollection.get(key).getLogin().equals(login)) {
                 dataManager.removeElement(personCollection.get(key).getId());
@@ -110,7 +122,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public void clear(String login) {
-       // personCollection.clear();
+        updateCollection();
         try {
             for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
                 if (entry.getValue().getLogin().equals(login)) {
@@ -125,6 +137,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public String remove_greater(Person person, String login) {
+        updateCollection();
         for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
             if (person.compareTo(entry.getValue()) > 0 && entry.getValue().getLogin().equals(login)) {
                 dataManager.removeElement(entry.getValue().getId());
@@ -138,6 +151,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public void remove_greater_key(String key, String login) {
+        updateCollection();
         try {
             for (String mapKey : personCollection.keySet()) {
                 if (Integer.valueOf(mapKey) > Integer.valueOf(key) && personCollection.get(mapKey).getLogin().equals(login)) {
@@ -152,6 +166,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public Person remove_any_by_nationality(Country country, String login) {
+        updateCollection();
         if (!personCollection.isEmpty()) {
             for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
                 if (entry.getValue().getNationality().equals(country) && entry.getValue().getLogin().equals(login)) {
@@ -168,18 +183,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public Person max_by_weight() {
-        /*
-        String maxKey = "";
-        Long maxWeight = 0L;
-        for (Map.Entry<String, Person> entry : personCollection.entrySet()) {
-            if (entry.getValue().getWeight() > maxWeight) {
-                maxWeight = entry.getValue().getWeight();
-                maxKey = entry.getKey();
-            }
-        }
-        return personCollection.get(maxKey);
-         */
-
+        updateCollection();
         Optional<Person> maxWeightPerson = personCollection.values().stream().max(new WeightComparator());
         if (maxWeightPerson.isPresent()) {
             return maxWeightPerson.get();
@@ -190,16 +194,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     @Override
     public List<Person> filter_less_than_passport_id(String passportId) {
-        /*
-        List<Person> tempList = new ArrayList<>();
-        for (Person p : personCollection.values()) {
-            if (p.getPassportID().compareTo(passportId) < 0) {
-                tempList.add(p);
-            }
-        }
-        return tempList;
-         */
-
+        updateCollection();
         List<Person> tempList = personCollection.values().stream()
                 .filter(person -> person.getPassportID().compareTo(passportId) < 0)
                 .collect(Collectors.toList());
@@ -207,6 +202,7 @@ public class HashMapPersonCollection implements PersonCollection {
     }
     @Override
     public boolean isEmpty() {
+        updateCollection();
         return personCollection.isEmpty();
     }
 

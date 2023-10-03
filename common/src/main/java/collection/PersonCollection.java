@@ -12,7 +12,7 @@ public interface PersonCollection {
 
     String info(); // вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
     List<Person> show(); // вывести в стандартный поток вывода все элементы коллекции в строковом представлении
-    void insert(String key, Person person); // добавить новый элемент с заданным ключом
+    String insert(String key, Person person); // добавить новый элемент с заданным ключом
     String update(int id, Person newPerson, String login); // обновить значение элемента коллекции, id которого равен заданному
     String remove_key(String key, String login); // удалить элемент из коллекции по его ключу
     void clear(String login); // очистить коллекцию

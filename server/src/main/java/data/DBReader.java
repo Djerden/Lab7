@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class DBReader implements DataReader {
         person.setNumber(rs.getString(2));//number
         person.setName(rs.getString(3)); //name
         person.setCoordinates(createCoordianates(rs));
-        //person.setCreationDate(rs.getDate(6));//"creation_date"
+        person.setCreationDate(rs.getTimestamp(6).toInstant().atZone(ZoneId.systemDefault()));//"creation_date"
         person.setHeight(rs.getDouble(7)); //"height"
         person.setWeight((long) rs.getInt(8));//"weight"
         person.setPassportID(rs.getString(9));//"passport_id"

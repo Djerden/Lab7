@@ -21,7 +21,7 @@ public class DBWriter implements DataWriter {
             statement.setString(2, person.getName());
             statement.setInt(3, person.getCoordinates().getX());
             statement.setInt(4, person.getCoordinates().getY());
-            statement.setDate(5, null); //person.getCreationDate()
+            statement.setTimestamp(5, Timestamp.from(person.getCreationDate().toInstant()));
             statement.setDouble(6, person.getHeight());
             statement.setDouble(7, person.getWeight());
             statement.setString(8, person.getPassportID());
@@ -60,7 +60,7 @@ public class DBWriter implements DataWriter {
             statement.setString(2, person.getName());
             statement.setInt(3, person.getCoordinates().getX());
             statement.setInt(4, person.getCoordinates().getY());
-            statement.setDate(5, null); //person.getCreationDate()
+            statement.setTimestamp(5, Timestamp.from(person.getCreationDate().toInstant())); //person.getCreationDate()
             statement.setDouble(6, person.getHeight());
             statement.setDouble(7, person.getWeight());
             statement.setString(8, person.getPassportID());

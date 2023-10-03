@@ -38,7 +38,7 @@ public class Server implements Application {
     private ServerCommandSimpleFactory factory = new ServerCommandSimpleFactory(this, personCollection);
 
     String address = "localhost";
-    int port = 2102;
+    int port = 3232;
 
     private boolean isRunning;
 
@@ -46,7 +46,7 @@ public class Server implements Application {
     @Override
     public void start() {
 
-        consoleStart();
+
 
         log.Logback.getLogger().info("server was started");
         isRunning = true;
@@ -55,7 +55,12 @@ public class Server implements Application {
         try {
             getDataFromDB();
             log.Logback.getLogger().info("data was parsed");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("connection problem with DB");
+            e.printStackTrace();
+        }
+
+        consoleStart();
 
         communicateWithClient();
 
