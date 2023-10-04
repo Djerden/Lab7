@@ -16,7 +16,7 @@ public class HashMapPersonCollection implements PersonCollection {
 
     private Map<String, Person> personCollection;
 
-    private Map<String, String> usersCollection; // login : password
+    private volatile Map<String, String> usersCollection; // login : password
     private ZonedDateTime creationDate;
     private DataManager dataManager;
 

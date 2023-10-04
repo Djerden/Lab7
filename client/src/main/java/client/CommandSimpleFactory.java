@@ -56,4 +56,8 @@ public class CommandSimpleFactory implements CommandFactory {
     public Command chooseCommand(String nameCommand) {
         return commands.get(nameCommand);
     }
+    public void resetCommands() {
+        commands = new HashMap<>();
+        setCommands();
+    }
 }

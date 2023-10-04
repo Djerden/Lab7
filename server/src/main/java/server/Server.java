@@ -129,9 +129,9 @@ public class Server implements Application {
 
     private void getDataFromDB() throws FileNotFoundException, ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql:lab7";
-        String user = "postgres";
-        String pass = "1967228";
+        String url = "jdbc:postgresql://pg:5432/studs";
+        String user = "s333220";
+        String pass = "hnALiRFfX1U2cErX";
         DataManager dataManager = new DBManager(url, user, pass);
         personCollection = new HashMapPersonCollection(dataManager);
     }

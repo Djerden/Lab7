@@ -45,7 +45,7 @@ public class ScriptReader implements CommandReader {
         if (commandParameters.size() < 2) {
             commandParameters.add(null);
         }
-
+        factory.resetCommands();
         Command command = factory.chooseCommand(commandParameters.get(0));
         if (command == null) {
             throw new UnknownCommandException();

@@ -27,7 +27,7 @@ public class ScriptCommand implements SimpleArgCommand {
 
     private Scanner scanner;
 
-    private List<Command> commandList = new ArrayList<>();
+    private List<Command> commandList = new ArrayList<>();;
 
     public ScriptCommand(CommandFactory factory, Writer writer) {
         this.factory = factory;
@@ -41,6 +41,7 @@ public class ScriptCommand implements SimpleArgCommand {
 
     @Override
     public void execute() {
+
         File file = new File(fileName);
         if (file.length() == 0) {
             throw new RuntimeException("The file is empty");
@@ -50,10 +51,12 @@ public class ScriptCommand implements SimpleArgCommand {
             scanner = new Scanner(file);
             CommandReader commandReader = new ScriptReader(scanner, factory, writer);
             String input;
+            Command command;
             while (scanner.hasNextLine()) {
                 try {
-                    Command command = commandReader.readCommands();
+                    command = commandReader.readCommands();
                     commandList.add(command);
+
                 } catch (UnknownCommandException e) {
                     writer.write("Unreadable command");
                 } catch (NullPointerException e) {
